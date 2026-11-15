@@ -256,17 +256,15 @@ p { margin: 0; }
 .about-copy h2 em, .notebook-head h2 em, .ai h2 em, .me-section h2 em { color: var(--borgonha); }
 .about-copy > p:not(.label) { color: var(--tinta-suave); }
 .principles { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.principles li {
-  display: grid; gap: 6px; align-content: start;
-  padding: 16px 16px 18px;
-  border: 1px solid var(--linha);
-  background: #fffaf2a6;
-  transition: transform .3s, border-color .3s;
-}
-.principles li:hover { transform: translateY(-3px) rotate(-.6deg); border-color: var(--tinta); }
 .p-n { font: 400 10px/1.3 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave); }
-.principles b { font: italic 400 22px/1.1 var(--f-display); color: var(--floresta); }
-.principles li > span:last-child { font-size: 14px; line-height: 1.5; color: var(--tinta-suave); }
+/* princípios (cards que viram) */
+.principle { height: 100%; }
+.principle .flip-face { display: grid; gap: 6px; align-content: start; padding: 16px 16px 32px; border: 1px solid var(--linha); background: #fffaf2; box-shadow: 0 14px 24px -18px #2a1e1a73; }
+.principle .flip-back { background: var(--floresta); color: var(--papel); border-color: transparent; align-content: center; }
+.principle .flip-back .p-n { color: var(--manteiga); }
+.p-ic { width: 40px; height: 44px; object-fit: contain; filter: var(--desbotado); }
+.principle b { font: italic 400 22px/1.1 var(--f-display); color: var(--floresta); }
+.p-desc { font-size: 14px; line-height: 1.5; }
 
 /* ---------- método, serviços e ferramentas (sketchbook) ---------- */
 .method {
@@ -378,11 +376,17 @@ p { margin: 0; }
 .wc-hera { width: 92px; right: 18px; top: -18px; animation: sway 8s ease-in-out infinite alternate; transform-origin: top center; }
 .wc-ginkgo { width: 64px; right: 34px; top: 30px; transform: rotate(-14deg); }
 .wc-flor { width: 84px; right: 28px; top: 22px; animation: sway 9s ease-in-out infinite alternate; }
-.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; }
-.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; column-gap: 8px; padding-block: 6px; min-height: 64px; align-content: start; }
-.steps li::before { content: counter(s, decimal-leading-zero); grid-row: span 2; font: 400 12px/2.4 var(--f-mono); color: var(--borgonha); }
-.steps b { font: 400 21px/1.3 var(--f-display); }
-.steps span { font-size: 14px; line-height: 1.55; color: var(--tinta-suave); }
+/* etapas "como uma ideia nasce" (cards que viram) */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.steps li:nth-child(4n+1) .step, .steps li:nth-child(4n) .step { rotate: -.7deg; }
+.steps li:nth-child(4n+2) .step, .steps li:nth-child(4n+3) .step { rotate: .6deg; }
+.step { height: 100%; min-height: 96px; }
+.step .flip-face { display: grid; gap: 4px; align-content: start; padding: 12px 14px 26px; background: #fffaf2; border: 1px solid var(--linha); box-shadow: 0 10px 18px -14px #2a1e1a66; }
+.step .flip-back { background: var(--vinho); color: var(--papel); border-color: transparent; align-content: center; padding-bottom: 14px; }
+.st-n { font: 400 11px/1.2 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--borgonha); }
+.step .flip-back .st-n { color: var(--manteiga); }
+.step b { font: 400 22px/1.2 var(--f-display); }
+.st-desc { font-size: 13px; line-height: 1.45; }
 .page-note { font: 400 21px/1.2 var(--f-hand); color: var(--borgonha); margin-top: 18px; transform: rotate(-2deg); }
 .services { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .services li { display: grid; grid-template-columns: 50px 1fr; gap: 14px; align-items: center; padding-bottom: 10px; border-bottom: 1px dashed #c9b8a2; }
@@ -461,30 +465,20 @@ p { margin: 0; }
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 56px 32px; margin-top: 44px;
 }
-.work { display: grid; grid-template-columns: auto 1fr; column-gap: 12px; align-content: start; }
-.work-img {
-  grid-column: 1 / -1;
-  display: block; overflow: hidden;
-  aspect-ratio: 404 / 316;
-  background: var(--papel);
-  padding: 10px;
-  border: 1px solid var(--linha);
-  box-shadow: 0 18px 30px -24px #2a1e1a66;
-  transition: transform .4s, box-shadow .4s;
-}
-.work-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
-.work:hover .work-img, .work:focus-visible .work-img { transform: translateY(-6px) rotate(-.6deg); box-shadow: 0 26px 36px -24px #2a1e1a80; }
-.work:hover .work-img img { transform: scale(1.04); }
-.work-n { font: 400 11px/1 var(--f-mono); color: var(--tinta-suave); margin-top: 20px; padding-top: 6px; }
-.work h3 { font: 400 26px/1.1 var(--f-display); margin-top: 18px; }
-.work-tag { grid-column: 2; font: 400 12px/1.4 var(--f-mono); letter-spacing: .04em; color: var(--tinta-suave); margin-top: 6px; }
-.work-cta {
-  grid-column: 2; justify-self: start; margin-top: 12px;
-  font: 400 18px/1 var(--f-hand); color: var(--borgonha);
-  opacity: .7; transform: translateX(-4px);
-  transition: opacity .3s, transform .3s;
-}
-.work:hover .work-cta, .work:focus-visible .work-cta { opacity: 1; transform: none; }
+/* trabalhos (cards que viram) */
+.work { height: 100%; border-radius: 4px; }
+.work .flip-face { display: grid; gap: 14px; align-content: start; padding: 10px 10px 34px; background: var(--papel); border: 1px solid var(--linha); box-shadow: 0 18px 30px -24px #2a1e1a66; }
+.work-img { display: block; overflow: hidden; aspect-ratio: 404 / 316; background: var(--papel-2); }
+.work-img img { width: 100%; height: 100%; object-fit: cover; }
+.work-meta { display: grid; gap: 5px; padding: 0 6px; }
+.work-n { font: 400 11px/1 var(--f-mono); letter-spacing: .04em; color: var(--tinta-suave); }
+.work-title { font: 400 26px/1.1 var(--f-display); }
+.work-tag { font: 400 12px/1.4 var(--f-mono); letter-spacing: .04em; color: var(--tinta-suave); }
+.work .flip-back { align-content: center; justify-items: start; gap: 10px; padding: 30px; background: var(--vinho); color: var(--papel); border-color: transparent; }
+.work .flip-back .work-n, .work .flip-back .work-tag { color: #efe0d8; }
+.work .flip-back .work-title { font-size: 36px; font-style: italic; }
+.work-link { margin-top: 14px; font: 400 21px/1 var(--f-hand); color: var(--manteiga); border-bottom: 1px solid; padding-bottom: 4px; transition: color .2s; }
+.work-link:hover { color: var(--papel); }
 
 /* ---------- cadernos ---------- */
 .notebook { position: relative; padding-block: 120px; display: grid; gap: 48px; }
@@ -697,14 +691,36 @@ p { margin: 0; }
 .file-card dt { font: 400 10px/1.3 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--tinta-suave); }
 .file-card dd { margin: 0; font: 400 20px/1.3 var(--f-display); }
 .hobbies { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
-.hobby { margin: 0; display: grid; gap: 10px; align-content: start; padding: 22px; background: #fffaf2b3; border: 1px solid var(--linha); transition: transform .4s; }
-.hobby:nth-child(even) { transform: rotate(1deg); }
-.hobby:hover { transform: rotate(0) translateY(-4px); }
+/* passatempos (cards que viram) */
+.hobby { height: 100%; }
+.hobbies > .hobby:nth-child(even) { rotate: 1deg; }
+.hobby .flip-face { display: grid; gap: 10px; align-content: start; padding: 22px 22px 36px; background: #fffaf2; border: 1px solid var(--linha); }
+.hobby .flip-back { align-content: center; background: var(--floresta); color: var(--papel); border-color: transparent; }
 .hobby img { width: 70px; height: 70px; object-fit: contain; }
 .hobby b { font: italic 400 22px/1.1 var(--f-display); color: var(--floresta); }
-.hobby span { font-size: 14px; line-height: 1.55; color: var(--tinta-suave); }
+.hobby .flip-back b { color: var(--manteiga); }
+.hobby .flip-back span { font-size: 14px; line-height: 1.55; }
 .next-pages { display: flex; flex-wrap: wrap; gap: 12px; }
 .next-pages span { font: 400 19px/1 var(--f-hand); color: var(--borgonha); padding: 12px 16px; border: 1px dashed var(--rosa); border-radius: 999px; }
+
+/* ---------- cards que viram (flip.js) ---------- */
+.flip { position: relative; display: block; cursor: pointer; border-radius: 10px; -webkit-tap-highlight-color: transparent; }
+.flip:focus-visible { outline: 2px solid var(--borgonha); outline-offset: 5px; }
+.flip-inner { position: relative; display: grid; height: 100%; border-radius: inherit; transform-style: preserve-3d; will-change: transform; }
+.flip-face { position: relative; min-width: 0; border-radius: inherit; }
+.flip-face + .flip-face { margin-top: 10px; }
+.js .flip-face { grid-area: 1 / 1; margin-top: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.js .flip-back { transform: rotateY(180deg); }
+.flip-glare {
+  position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none;
+  opacity: 0; transition: opacity .3s; transform: translateZ(1px);
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), #ffffffd9, transparent 55%);
+  mix-blend-mode: soft-light;
+}
+.is-flipped .flip-glare { transform: rotateY(180deg) translateZ(1px); }
+.flip-hint { position: absolute; right: 12px; bottom: 8px; font: 400 15px/1 var(--f-hand); color: var(--borgonha); opacity: .6; transition: opacity .3s; }
+.flip:hover .flip-hint { opacity: 1; }
+html:not(.js) .flip-hint { display: none; }
 
 /* ---------- abertura (tela de carregamento) ---------- */
 .loader {
