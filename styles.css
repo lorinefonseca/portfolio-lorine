@@ -815,6 +815,12 @@ html:not(.js) .flip-hint { display: none; }
 .type-caret.done::after { opacity: 0; transition: opacity .6s; animation: none; }
 .method-head .type-caret::after, .contact .type-caret::after { background: var(--manteiga); }
 
+/* frase inicial: palavras sobem rapidinho */
+.rise-words .rise { display: inline-block; }
+.rise-words:not(.rise-in) .rise { opacity: 0; }
+.rise-in .rise { animation: rise-up .55s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--w) * 45ms); }
+@keyframes rise-up { from { opacity: 0; transform: translateY(.6em); } to { opacity: 1; transform: none; } }
+
 /* Text Type: cursor piscando */
 .typer { color: var(--vinho); }
 .caret { display: inline-block; width: 1px; height: 1.15em; margin-left: 3px; vertical-align: -.2em; background: var(--borgonha); animation: blink 1s steps(1) infinite; }

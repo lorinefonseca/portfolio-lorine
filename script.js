@@ -424,7 +424,31 @@ function eraseText(el, speed, done) {
 
   // Text Type nos títulos: as letras já ocupam o lugar (sem pular o layout) e aparecem uma a uma
   if (!reduce) {
-    var heads = Array.prototype.slice.call(document.querySelectorAll('.hero h1, .me-hero h1, main h2, .page h3, .soundtrack-copy h3'));
+    // frase inicial: palavras sobem rapidinho
+    var heroH = document.querySelector('.hero h1');
+    if (heroH) {
+      var wi = 0;
+      (function wrap(el) {
+        Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+          if (node.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            node.textContent.split(/(\s+)/).forEach(function (p) {
+              if (!p) return;
+              if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+              var w = document.createElement('span'); w.className = 'rise'; w.style.setProperty('--w', wi++); w.textContent = p;
+              frag.appendChild(w);
+            });
+            node.replaceWith(frag);
+          } else if (node.nodeType === 1) {
+            if (node.classList.contains('w')) { node.classList.add('rise'); node.style.setProperty('--w', wi++); }
+            else wrap(node);
+          }
+        });
+      })(heroH);
+      heroH.classList.add('rise-words');
+      setTimeout(function () { heroH.classList.add('rise-in'); }, START - 150);
+    }
+    var heads = Array.prototype.slice.call(document.querySelectorAll('.me-hero h1, main h2, .page h3, .soundtrack-copy h3'));
     heads.forEach(function (h) { split(h); h.classList.add('type-text'); });
     function typeHead(h, speed) {
       var chars = h.querySelectorAll('.char');
