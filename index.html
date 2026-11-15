@@ -11,8 +11,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400..700&family=La+Belle+Aurore&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/botanica/orquidea.webp">
   <link rel="stylesheet" href="styles.css">
+  <script>try{if(sessionStorage.getItem('lo-abertura')){document.documentElement.classList.add('sem-abertura')}sessionStorage.setItem('lo-abertura','1')}catch(e){}</script>
 </head>
 <body>
+  <div class="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <div class="loader-arch"><img src="assets/botanica/orquidea.webp" alt="" width="860" height="1343"></div>
+      <p class="loader-name"><span style="--i:0">L</span><span style="--i:1">o</span><span style="--i:2">r</span><span style="--i:3">i</span><span style="--i:4">n</span><span style="--i:5">e</span> <em><span style="--i:7">F</span><span style="--i:8">o</span><span style="--i:9">n</span><span style="--i:10">s</span><span style="--i:11">e</span><span style="--i:12">c</span><span style="--i:13">a</span></em></p>
+      <p class="loader-sub">design · publicidade · direção de arte</p>
+    </div>
+  </div>
   <a class="skip" href="#sobre">pular para o conteúdo</a>
 
   <header class="masthead wrap">
@@ -129,71 +137,81 @@
           <h2>Um pouco de método, um pouco de <em>acaso</em>.</h2>
         </div>
 
-        <div class="sketchbook">
-          <article class="page page-left" aria-labelledby="como">
-            <img class="wc wc-lavanda" src="assets/aquarela/lavanda.webp" alt="" width="162" height="300" loading="lazy">
-            <p class="page-tag">pág. 12 · como eu trabalho</p>
-            <h3 id="como">Como uma ideia nasce</h3>
-            <ol class="steps">
-              <li><b>Observar</b><span>começo pelo briefing: perguntas e escuta para entender o que você quer de verdade.</span></li>
-              <li><b>Sentir</b><span>busco a história do produto e o que motiva quem o criou. Todo negócio carrega um valor afetivo.</span></li>
-              <li><b>Pesquisar</b><span>mergulho em referências, mercado e contexto até chegar ao cerne da ideia.</span></li>
-              <li><b>Associar</b><span>cruzo coisas que parecem distantes até surgir um conceito.</span></li>
-              <li><b>Desconstruir</b><span>questiono o óbvio e corto o que não tem intenção.</span></li>
-              <li><b>Experimentar</b><span>desenvolvo o visual com cuidado nos detalhes e testo caminhos até os elementos conversarem.</span></li>
-            </ol>
-            <p class="page-note">a parte que eu mais amo (e a mais difícil): desenvolver o conceito.</p>
-          </article>
+        <div class="binder" id="fichario">
+          <div class="binder-tabs" role="tablist" aria-label="Páginas do fichário">
+            <button type="button" role="tab" class="tab tab-1" id="tab-1" aria-controls="spread-1" aria-selected="true">serviços</button>
+            <button type="button" role="tab" class="tab tab-2" id="tab-2" aria-controls="spread-2" aria-selected="false" tabindex="-1">ferramentas</button>
+          </div>
+          <div class="spreads">
+            <div class="sketchbook spread is-active" id="spread-1" role="tabpanel" aria-labelledby="tab-1">
+              <article class="page page-left" aria-labelledby="como">
+                <img class="wc wc-lavanda" src="assets/aquarela/lavanda.webp" alt="" width="162" height="300" loading="lazy">
+                <p class="page-tag">pág. 12 · como eu trabalho</p>
+                <h3 id="como">Como uma ideia nasce</h3>
+                <ol class="steps">
+                  <li><b>Observar</b><span>começo pelo briefing: perguntas e escuta para entender o que você quer de verdade.</span></li>
+                  <li><b>Sentir</b><span>busco a história do produto e o que motiva quem o criou. Todo negócio carrega um valor afetivo.</span></li>
+                  <li><b>Pesquisar</b><span>mergulho em referências, mercado e contexto até chegar ao cerne da ideia.</span></li>
+                  <li><b>Associar</b><span>cruzo coisas que parecem distantes até surgir um conceito.</span></li>
+                  <li><b>Desconstruir</b><span>questiono o óbvio e corto o que não tem intenção.</span></li>
+                  <li><b>Experimentar</b><span>desenvolvo o visual com cuidado nos detalhes e testo caminhos até os elementos conversarem.</span></li>
+                </ol>
+                <p class="page-note">a parte que eu mais amo (e a mais difícil): desenvolver o conceito.</p>
+              </article>
 
-          <article class="page page-right" aria-labelledby="faco">
-            <img class="wc wc-hera" src="assets/aquarela/hera.webp" alt="" width="228" height="486" loading="lazy">
-            <p class="page-tag">pág. 13 · o que eu faço</p>
-            <h3 id="faco">Serviços</h3>
-            <ul class="services">
-              <li><img src="assets/aquarela/lirio.webp" alt="" width="345" height="375" loading="lazy"><div><b>Direção de arte</b><span>conceito visual de campanhas, ensaios e conteúdos.</span></div></li>
-              <li><img src="assets/aquarela/flor-creme.webp" alt="" width="219" height="186" loading="lazy"><div><b>Identidade visual e branding</b><span>logo, paleta, tipografia e a personalidade de uma marca.</span></div></li>
-              <li><img src="assets/aquarela/frutinhas.webp" alt="" width="432" height="327" loading="lazy"><div><b>Campanhas publicitárias</b><span>da ideia central às peças, com estratégia e texto.</span></div></li>
-              <li><img src="assets/aquarela/folhas.webp" alt="" width="219" height="216" loading="lazy"><div><b>Social media e conteúdo</b><span>posts, carrosséis e narrativas para redes sociais.</span></div></li>
-              <li><img src="assets/aquarela/ramo-creme.webp" alt="" width="273" height="231" loading="lazy"><div><b>Endomarketing e impressos</b><span>brindes, cadernos, agendas e peças que a marca leva para a mão das pessoas.</span></div></li>
-              <li><img src="assets/aquarela/ginkgo.webp" alt="" width="165" height="189" loading="lazy"><div><b>Produção audiovisual</b><span>roteiro, captação, edição e narração de vídeos.</span></div></li>
-              <li><img src="assets/aquarela/petala-2.webp" alt="" width="129" height="96" loading="lazy"><div><b>Conteúdo com IA e toque humano</b><span>criações com inteligência artificial, sempre revisadas e com a minha cara.</span></div></li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="sketchbook sketchbook-2">
-          <article class="page page-left" aria-labelledby="ferramentas">
-            <img class="wc wc-ginkgo" src="assets/aquarela/ginkgo.webp" alt="" width="165" height="189" loading="lazy">
-            <p class="page-tag">pág. 14 · estojo</p>
-            <h3 id="ferramentas">Ferramentas</h3>
-            <dl class="tools">
-              <div><dt>criação</dt><dd><span>Photoshop</span><span>Illustrator</span><span>Figma</span><span>Canva</span><span>CapCut</span></dd></div>
-              <div><dt>inteligência artificial</dt><dd><span>Claude Code</span><span>ChatGPT</span><span>Magnific</span><span>ElevenLabs</span></dd></div>
-              <div><dt>referência e organização</dt><dd><span>Pinterest</span><span>Notion</span><span>Trello</span></dd></div>
-              <div><dt>e-mail marketing</dt><dd><span>HubSpot</span><span>All iN</span><span>Mailbiz</span></dd></div>
-              <div><dt>pacote Office</dt><dd><span class="fav">PowerPoint</span><span>Excel</span><span>Word</span></dd></div>
-              <div><dt>à mão</dt><dd><span>cadernos e colagem</span><span>desenho</span><span>aquarela</span><span>Canon PowerShot</span></dd></div>
-              <div><dt>idiomas</dt><dd><span>português</span><span>inglês intermediário</span></dd></div>
-            </dl>
-          </article>
-
-          <article class="page page-right" aria-labelledby="combinados">
-            <img class="wc wc-flor" src="assets/aquarela/flor-creme.webp" alt="" width="219" height="186" loading="lazy">
-            <p class="page-tag">pág. 15 · combinados</p>
-            <h3 id="combinados">Como trabalhamos juntos</h3>
-            <ul class="deals">
-              <li>Começo sempre por um bom briefing: perguntas, história e motivações.</li>
-              <li>Apresento ideias com fatos e explicações. A escolha final é sua.</li>
-              <li>Até 3 rodadas de ajuste para chegar ao resultado final.</li>
-              <li>Você recebe tudo o que foi proposto: posts, vídeos e todos os assets finais.</li>
-              <li>Arquivos abertos mediante valor adicional.</li>
-            </ul>
-            <div class="stamp-row">
-              <span class="stamp">orçamento sob consulta</span>
-              <span class="stamp stamp-2">freelas e oportunidades</span>
+              <article class="page page-right" aria-labelledby="faco">
+                <img class="wc wc-hera" src="assets/aquarela/hera.webp" alt="" width="228" height="486" loading="lazy">
+                <p class="page-tag">pág. 13 · o que eu faço</p>
+                <h3 id="faco">Serviços</h3>
+                <ul class="services">
+                  <li><img src="assets/aquarela/lirio.webp" alt="" width="345" height="375" loading="lazy"><div><b>Direção de arte</b><span>conceito visual de campanhas, ensaios e conteúdos.</span></div></li>
+                  <li><img src="assets/aquarela/flor-creme.webp" alt="" width="219" height="186" loading="lazy"><div><b>Identidade visual e branding</b><span>logo, paleta, tipografia e a personalidade de uma marca.</span></div></li>
+                  <li><img src="assets/aquarela/frutinhas.webp" alt="" width="432" height="327" loading="lazy"><div><b>Campanhas publicitárias</b><span>da ideia central às peças, com estratégia e texto.</span></div></li>
+                  <li><img src="assets/aquarela/folhas.webp" alt="" width="219" height="216" loading="lazy"><div><b>Social media e conteúdo</b><span>posts, carrosséis e narrativas para redes sociais.</span></div></li>
+                  <li><img src="assets/aquarela/ramo-creme.webp" alt="" width="273" height="231" loading="lazy"><div><b>Endomarketing e impressos</b><span>brindes, cadernos, agendas e peças que a marca leva para a mão das pessoas.</span></div></li>
+                  <li><img src="assets/aquarela/ginkgo.webp" alt="" width="165" height="189" loading="lazy"><div><b>Produção audiovisual</b><span>roteiro, captação, edição e narração de vídeos.</span></div></li>
+                  <li><img src="assets/aquarela/petala-2.webp" alt="" width="129" height="96" loading="lazy"><div><b>Conteúdo com IA e toque humano</b><span>criações com inteligência artificial, sempre revisadas e com a minha cara.</span></div></li>
+                </ul>
+                <button type="button" class="turn turn-next" data-go="2">vire a página <span aria-hidden="true">↷</span></button>
+              </article>
             </div>
-            <p class="page-note">aberta a lugares que valorizem a criatividade e o crescimento.</p>
-          </article>
+
+            <div class="sketchbook spread" id="spread-2" role="tabpanel" aria-labelledby="tab-2">
+              <article class="page page-left" aria-labelledby="ferramentas">
+                <img class="wc wc-ginkgo" src="assets/aquarela/ginkgo.webp" alt="" width="165" height="189" loading="lazy">
+                <p class="page-tag">pág. 14 · ferramentas</p>
+                <h3 id="ferramentas">Ferramentas</h3>
+                <dl class="tools">
+                  <div><dt>criação</dt><dd><span>Photoshop</span><span>Illustrator</span><span>Figma</span><span>Canva</span><span>CapCut</span></dd></div>
+                  <div><dt>inteligência artificial</dt><dd><span>Claude Code</span><span>ChatGPT</span><span>Magnific</span><span>ElevenLabs</span></dd></div>
+                  <div><dt>referência e organização</dt><dd><span>Pinterest</span><span>Notion</span><span>Trello</span></dd></div>
+                  <div><dt>e-mail marketing</dt><dd><span>HubSpot</span><span>All iN</span><span>Mailbiz</span></dd></div>
+                  <div><dt>pacote Office</dt><dd><span class="fav">PowerPoint</span><span>Excel</span><span>Word</span></dd></div>
+                  <div><dt>à mão</dt><dd><span>cadernos e colagem</span><span>desenho</span><span>aquarela</span><span>Canon PowerShot</span></dd></div>
+                  <div><dt>idiomas</dt><dd><span>português</span><span>inglês intermediário</span></dd></div>
+                </dl>
+                <button type="button" class="turn turn-prev" data-go="1"><span aria-hidden="true">↶</span> voltar a página</button>
+              </article>
+
+              <article class="page page-right" aria-labelledby="combinados">
+                <img class="wc wc-flor" src="assets/aquarela/flor-creme.webp" alt="" width="219" height="186" loading="lazy">
+                <p class="page-tag">pág. 15 · combinados</p>
+                <h3 id="combinados">Como trabalhamos juntos</h3>
+                <ul class="deals">
+                  <li>Começo sempre por um bom briefing: perguntas, história e motivações.</li>
+                  <li>Apresento ideias com fatos e explicações. A escolha final é sua.</li>
+                  <li>Até 3 rodadas de ajuste para chegar ao resultado final.</li>
+                  <li>Você recebe tudo o que foi proposto: posts, vídeos e todos os assets finais.</li>
+                  <li>Arquivos abertos mediante valor adicional.</li>
+                </ul>
+                <div class="stamp-row">
+                  <span class="stamp">orçamento sob consulta</span>
+                  <span class="stamp stamp-2">freelas e oportunidades</span>
+                </div>
+                <p class="page-note">aberta a lugares que valorizem a criatividade e o crescimento.</p>
+              </article>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -360,7 +378,7 @@
         <div class="contact-links">
           <a href="mailto:lorinefonseca0@gmail.com">e-mail ↗</a>
           <a href="https://www.behance.net/lorinefonseca" target="_blank" rel="noopener">behance ↗</a>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noopener">linkedin ↗</a>
+          <a href="https://www.linkedin.com/in/lorine-fonseca/" target="_blank" rel="noopener">linkedin ↗</a>
         </div>
       </div>
     </section>
@@ -372,6 +390,12 @@
     <a href="#inicio">voltar ao topo ↑</a>
   </footer>
 
+  <a class="whatsapp" href="https://wa.me/5519991912205?text=Ol%C3%A1%21%20Vim%20pelo%20seu%20site%2Fportf%C3%B3lio." target="_blank" rel="noopener" aria-label="Conversar com a Lo no WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path class="wa-bubble" d="M12 2.6a9.4 9.4 0 0 0-8.1 14.2L2.7 21.3l4.6-1.2A9.4 9.4 0 1 0 12 2.6z"/><path class="wa-phone" d="M9.1 7.6c-.2-.5-.4-.5-.6-.5h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3 1 2.6 1.1 2.8.1.2 1.9 3 4.7 4.1 2.3.9 2.8.7 3.3.7.5-.1 1.6-.7 1.8-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3l-1.9-.9c-.3-.1-.4-.1-.6.1l-.8 1c-.2.2-.3.2-.6.1a6.8 6.8 0 0 1-3.4-3c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.5l-.9-2.1z"/></svg>
+    <span>fale comigo</span>
+  </a>
+
   <script src="script.js"></script>
+  <script src="rain.js" defer></script>
 </body>
 </html>

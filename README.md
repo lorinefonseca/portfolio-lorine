@@ -23,7 +23,10 @@ e, se quiser, `PLAYLIST` com o link da playlist inteira. A vitrola gira quando a
 ## Personalizar
 - Projetos: cada card em `#projetos` é um link `<a class="work">` para o Behance.
 - Frases dos cadernos: lista `phrases` em `script.js`.
-- Atualize o link do LinkedIn em `#contato` para o seu perfil.
+- WhatsApp: botão flutuante `.whatsapp` no fim do `index.html` e do `sobre-mim.html`.
+- Fichário (método): abas `.tab` e botões `.turn` viram as páginas; cada página dupla é um `.spread`.
+- Cursor de abelha: coloque a imagem em `assets/objetos/abelha.webp` (PNG/WebP com fundo transparente).
+- Tela de abertura: `.loader` no início do `index.html` (aparece uma vez por visita).
 
 ## Créditos das imagens
 Todas as ilustrações botânicas são de domínio público, via Wikimedia Commons:
@@ -34,6 +37,7 @@ Todas as ilustrações botânicas são de domínio público, via Wikimedia Commo
 - Papoula: *Papaver somniferum*, O. W. Thomé, Flora von Deutschland (1885).
 - Borboleta e prancha de frutos: Maria Sibylla Merian, Metamorphosis insectorum Surinamensium (1705).
 
+Efeito de chuva no vidro (`rain.js`): shader "Rain" de ittybitty (https://ittybitty.dev), licença MIT.
 Textura de papel: "Natural Paper", Transparent Textures (transparenttextures.com).
 Aquarelas, terrário, borboleta vinho, gato e gramofone: imagens enviadas pela Lorine.
 Fotografias de fundo: referências salvas pela Lorine no Pinterest; confirme os direitos de uso antes de publicar ou troque por fotos autorais.

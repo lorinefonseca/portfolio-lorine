@@ -138,7 +138,7 @@ var TRACKS = [
 /* Aparecer suave ao rolar (o conteúdo continua visível sem JavaScript). */
 (function () {
   if (!('IntersectionObserver' in window)) return;
-  var els = document.querySelectorAll('.about-art, .about-copy, .page, .ai-copy, .ledger, .work, .pressed, .cat, .soundtrack, .file-card, .hobby');
+  var els = document.querySelectorAll('.about-art, .about-copy, .ai-copy, .ledger, .work, .pressed, .cat, .soundtrack, .file-card, .hobby');
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
@@ -148,4 +148,90 @@ var TRACKS = [
     var r = el.getBoundingClientRect();
     if (r.top > window.innerHeight) { el.classList.add('reveal'); io.observe(el); }
   });
+})();
+
+/* Fichário: abas laterais e botão "vire a página" com animação de folha virando. */
+(function () {
+  var binder = document.getElementById('fichario');
+  if (!binder) return;
+  var tabs = Array.prototype.slice.call(binder.querySelectorAll('[role="tab"]'));
+  var spreads = Array.prototype.slice.call(binder.querySelectorAll('.spread'));
+  var current = 0, busy = false;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setTabs(i) {
+    tabs.forEach(function (t, k) {
+      t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      t.tabIndex = k === i ? 0 : -1;
+    });
+    spreads.forEach(function (s, k) {
+      if (k === i) { s.removeAttribute('inert'); s.removeAttribute('aria-hidden'); }
+      else { s.setAttribute('inert', ''); s.setAttribute('aria-hidden', 'true'); }
+    });
+  }
+  function go(i, focusTab) {
+    if (i === current || busy || i < 0 || i >= spreads.length) return;
+    var from = spreads[current], to = spreads[i];
+    var dir = i > current ? 'to-next' : 'to-prev';
+    setTabs(i);
+    if (focusTab) tabs[i].focus();
+    if (reduce) {
+      from.classList.remove('is-active'); to.classList.add('is-active');
+      current = i; return;
+    }
+    busy = true;
+    from.classList.remove('is-active');
+    from.classList.add('is-leaving', dir);
+    to.classList.add('is-active', 'is-entering');
+    setTimeout(function () {
+      from.classList.remove('is-leaving', 'to-next', 'to-prev');
+      to.classList.remove('is-entering');
+      busy = false;
+    }, 950);
+    current = i;
+    var top = binder.getBoundingClientRect().top;
+    if (top < 0) binder.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  tabs.forEach(function (t, k) {
+    t.addEventListener('click', function () { go(k); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); go((current + 1) % tabs.length, true); }
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); go((current - 1 + tabs.length) % tabs.length, true); }
+    });
+  });
+  Array.prototype.forEach.call(binder.querySelectorAll('.turn'), function (b) {
+    b.addEventListener('click', function () { go(parseInt(b.getAttribute('data-go'), 10) - 1); });
+  });
+  setTabs(0);
+})();
+
+/* Cursor de abelha: segue o mouse voando, vira na direção do movimento.
+   Só em computador (mouse) e só se a imagem assets/objetos/abelha.webp existir. */
+(function () {
+  if (!window.matchMedia || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var bee = new Image();
+  bee.className = 'bee-cursor';
+  bee.alt = '';
+  bee.setAttribute('aria-hidden', 'true');
+  bee.onload = function () {
+    document.body.appendChild(bee);
+    document.documentElement.classList.add('has-bee');
+    var mx = -100, my = -100, x = -100, y = -100, ang = 0, raf = 0;
+    function tick(t) {
+      var dx = mx - x, dy = my - y;
+      x += dx * 0.22; y += dy * 0.22;
+      if (Math.abs(dx) + Math.abs(dy) > 2) ang += ((Math.atan2(dy, dx) * 180 / Math.PI + 90) - ang) * 0.12;
+      var hover = Math.sin(t / 140) * 2;
+      bee.style.transform = 'translate(' + (x - 22) + 'px,' + (y - 22 + hover) + 'px) rotate(' + ang + 'deg)';
+      raf = requestAnimationFrame(tick);
+    }
+    document.addEventListener('mousemove', function (e) {
+      mx = e.clientX; my = e.clientY; bee.classList.add('on');
+      bee.classList.toggle('big', !!e.target.closest('a, button, [role="tab"]'));
+      if (!raf) raf = requestAnimationFrame(tick);
+    });
+    document.addEventListener('mouseleave', function () { bee.classList.remove('on'); });
+  };
+  bee.src = 'assets/objetos/abelha.webp';
 })();
