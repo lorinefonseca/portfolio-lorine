@@ -59,7 +59,7 @@ document.documentElement.classList.add('js');
 /* Aparecer suave ao rolar (o conteúdo continua visível sem JavaScript). */
 (function () {
   if (!('IntersectionObserver' in window)) return;
-  var els = document.querySelectorAll('.about-art, .about-copy, .work, .pressed, .cat, .contact-copy');
+  var els = document.querySelectorAll('.about-art, .about-copy, .page, .work, .pressed, .cat, .soundtrack');
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
@@ -69,4 +69,20 @@ document.documentElement.classList.add('js');
     var r = el.getBoundingClientRect();
     if (r.top > window.innerHeight) { el.classList.add('reveal'); io.observe(el); }
   });
+})();
+
+/* Trilha sonora: quando houver link de playlist em data-playlist, mostra o player do Spotify. */
+(function () {
+  var box = document.querySelector('.spotify');
+  if (!box) return;
+  var url = box.getAttribute('data-playlist') || '';
+  var m = url.match(/open\.spotify\.com\/(playlist|album)\/([A-Za-z0-9]+)/);
+  if (!m) return;
+  var f = document.createElement('iframe');
+  f.src = 'https://open.spotify.com/embed/' + m[1] + '/' + m[2] + '?utm_source=generator&theme=0';
+  f.title = 'Trilha sonora, playlist no Spotify';
+  f.loading = 'lazy';
+  f.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+  box.innerHTML = '';
+  box.appendChild(f);
 })();
