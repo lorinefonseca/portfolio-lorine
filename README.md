@@ -5,8 +5,9 @@ Site estático (HTML, CSS e JavaScript, sem build) publicado na Vercel.
 Direção visual: editorial anotado (notas à mão na margem) + botânica (janela em arco, gravuras antigas).
 
 ## Estrutura
-- `index.html`: conteúdo. Seções: `#inicio`, `#sobre`, `#metodo` (processo, serviços, ferramentas e combinados), `#ia`, `#projetos`, `#moodboard` (cadernos e trilha sonora), `#contato`.
-- `sobre-mim.html`: página "Sobre mim" (link no menu e no marcador flutuante).
+- `index.html`: conteúdo. Seções: `#inicio`, `#sobre`, `#metodo` (processo, serviços, ferramentas e combinados), `#ia`, `#projetos`, `#contato`.
+- `sobre-mim.html`: página "Conheça a Lo" (link no menu e no marcador flutuante), com os cadernos (`#moodboard`) e a trilha sonora (`#trilha`).
+- Ícone da página: `favicon.ico` e `assets/icone-*.png` (borboleta).
 - `styles.css`: estilos. Paleta e fontes nas variáveis `:root` no topo.
 - `script.js`: ano do rodapé, notas da margem, frases dos cadernos e aparecer suave ao rolar.
 - `assets/behance/`: capas dos projetos (do Behance da Lorine).
@@ -26,7 +27,7 @@ As capas dos álbuns vêm do próprio Spotify (campo `cover`).
 - Frases dos cadernos: lista `phrases` em `script.js`.
 - WhatsApp: botão flutuante `.whatsapp` no fim do `index.html` e do `sobre-mim.html`.
 - Cards que viram (`flip.js`): qualquer `.flip` com `.flip-front` e `.flip-back` vira ao clicar (mola, inclinação e brilho). Usado nos princípios, nas etapas, nos trabalhos e nos passatempos.
-- Efeitos de texto (`script.js`): letras no título da abertura, títulos saindo do desfoque, máquina de escrever (`.typer`), parágrafos que acendem com a rolagem (`.scroll-reveal`) e escrita à mão em SVG (`.handwrite`).
+- Efeitos de texto (`script.js`): títulos se datilografam letra por letra (Text Type), "lo faz · ..." em loop (`.typer`) e assinaturas desenhadas à mão (`.handwrite`).
 - Fichário (método): abas `.tab` e botões `.turn` viram as páginas; cada página dupla é um `.spread`.
 - Cursor de borboleta com rastro pontilhado: imagem em `assets/objetos/borboleta-cursor.webp` (aparece só em computador).
 - Tela de abertura: `.loader` no início do `index.html` (aparece uma vez por visita).

@@ -383,12 +383,9 @@ function eraseText(el, speed, done) {
   fly.src = 'assets/objetos/borboleta-cursor.webp';
 })();
 
-/* Animação nos textos (efeitos inspirados no React Bits, feitos à mão para este site):
-   - Split Text: títulos grandes entram letra por letra
-   - Blur Text: títulos de seção saem do desfoque, palavra por palavra
-   - Text Type: "lo faz · ..." datilografa as áreas em loop
-   - Scroll Reveal: parágrafos do "sobre" acendem conforme a rolagem
-   - Escrita à mão: assinaturas desenhadas traço a traço */
+/* Animação nos textos — "Text Type" (máquina de escrever, inspirado no React Bits):
+   os títulos se datilografam letra por letra, com cursor piscando, quando aparecem na tela.
+   Mais: "lo faz · ..." em loop, e as assinaturas desenhadas à mão. */
 (function () {
   if (!('IntersectionObserver' in window)) return;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -400,66 +397,59 @@ function eraseText(el, speed, done) {
     }, { rootMargin: margin || '0px 0px -6% 0px' });
     Array.prototype.forEach.call(els, function (el) { io.observe(el); });
   }
-  // divide o texto em palavras (e, se pedido, em letras), sem mexer em botões e links
-  function split(el, chars, counters) {
+  // separa o texto em letras (mantendo palavras inteiras na quebra de linha), sem mexer em botões e links
+  function split(el) {
     Array.prototype.slice.call(el.childNodes).forEach(function (node) {
       if (node.nodeType === 3) {
         var frag = document.createDocumentFragment();
         node.textContent.split(/(\s+)/).forEach(function (p) {
           if (!p) return;
-          if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
-          var w = document.createElement('span'); w.className = 'word'; w.style.setProperty('--w', counters.w++);
-          if (chars) {
-            Array.from(p).forEach(function (ch) {
-              var c = document.createElement('span'); c.className = 'char'; c.style.setProperty('--c', counters.c++); c.textContent = ch;
-              w.appendChild(c);
-            });
-          } else w.textContent = p;
+          if (/^\s+$/.test(p)) { var sp = document.createElement('span'); sp.className = 'char space'; sp.textContent = p; frag.appendChild(sp); return; }
+          var w = document.createElement('span'); w.className = 'word';
+          Array.from(p).forEach(function (ch) {
+            var c = document.createElement('span'); c.className = 'char'; c.textContent = ch; w.appendChild(c);
+          });
           frag.appendChild(w);
         });
         node.replaceWith(frag);
-      } else if (node.nodeType === 1 && node.tagName !== 'BR') split(node, chars, counters);
+      } else if (node.nodeType === 1 && node.tagName !== 'BR') split(node);
     });
   }
 
+  // Text Type nos títulos: as letras já ocupam o lugar (sem pular o layout) e aparecem uma a uma
   if (!reduce) {
-    // Split Text
-    var big = document.querySelectorAll('.hero h1, .me-hero h1');
-    Array.prototype.forEach.call(big, function (h) { split(h, true, { w: 0, c: 0 }); h.classList.add('split'); });
-    setTimeout(function () { Array.prototype.forEach.call(big, function (h) { h.classList.add('words-in'); }); }, START - 200);
-
-    // Blur Text
-    var heads = document.querySelectorAll('main h2, .page h3, .soundtrack-copy h3');
-    Array.prototype.forEach.call(heads, function (h) { split(h, false, { w: 0, c: 0 }); h.classList.add('blur-words'); });
-    onView(heads, 'words-in');
-
-    // Scroll Reveal
-    var reveal = Array.prototype.slice.call(document.querySelectorAll('.about-copy > p:not(.label), .ai-copy > p:not(.label), .me-hero .intro, .me-section-head > p:not(.label)'));
-    reveal.forEach(function (p) { split(p, false, { w: 0, c: 0 }); p.classList.add('scroll-reveal'); p._words = p.querySelectorAll('.word'); });
-    var ticking = false;
-    function update() {
-      ticking = false;
-      var vh = window.innerHeight;
-      reveal.forEach(function (p) {
-        var r = p.getBoundingClientRect();
-        // acende do fim da tela até ~40% da altura; o que já passou fica aceso
-        var prog = r.bottom < 0 ? 1 : Math.min(1, Math.max(0, (vh * 0.92 - r.top) / (vh * 0.5 + r.height * 0.35)));
-        var n = p._words.length, lit = prog * (n + 4);
-        for (var i = 0; i < n; i++) {
-          var a = Math.min(1, Math.max(0, lit - i));
-          if (p._words[i]._a !== a) { p._words[i]._a = a; p._words[i].style.setProperty('--a', a.toFixed(2)); }
+    var heads = Array.prototype.slice.call(document.querySelectorAll('.hero h1, .me-hero h1, main h2, .page h3, .soundtrack-copy h3'));
+    heads.forEach(function (h) { split(h); h.classList.add('type-text'); });
+    function typeHead(h, speed) {
+      var chars = h.querySelectorAll('.char');
+      var caret = document.createElement('span');
+      caret.className = 'type-caret'; caret.setAttribute('aria-hidden', 'true');
+      var i = 0;
+      h.classList.add('typing');
+      (function step() {
+        if (i < chars.length) {
+          var c = chars[i++];
+          c.classList.add('on');
+          c.after(caret);
+          var pause = /[.,;:!?]/.test(c.textContent) ? speed * 6 : c.classList.contains('space') ? speed * 0.6 : speed;
+          setTimeout(step, pause + Math.random() * speed * 0.5);
+        } else {
+          h.classList.remove('typing');
+          setTimeout(function () { caret.classList.add('done'); }, 1600);
+          setTimeout(function () { caret.remove(); }, 2400);
         }
-      });
+      })();
     }
-    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    update();
-
-    // textos de apoio e etiquetas: leve deslize
-    var soft = document.querySelectorAll('.label, .eyebrow, .hero .intro, .notebook-head > p, .contact-inner > p, .hand-note, .page-tag, .page-note');
-    Array.prototype.forEach.call(soft, function (el) { el.classList.add('soft'); });
-    onView(soft, 'soft-in');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        var big = e.target.matches('.hero h1, .me-hero h1');
+        var delay = e.target.matches('.hero h1') ? START - 100 : 120;
+        setTimeout(function () { typeHead(e.target, big ? 42 : 34); }, delay);
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    heads.forEach(function (h) { io.observe(h); });
   }
 
   // Text Type: "lo faz · design / publicidade / ..."

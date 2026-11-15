@@ -800,22 +800,20 @@ html:not(.js) .flip-hint { display: none; }
 .has-bee .bee-cursor.on { opacity: 1; }
 .has-bee .bee-cursor.big { width: 58px; }
 
-/* ---------- animação dos textos (script.js) ---------- */
-/* Split Text: letras */
-.split .word { display: inline-block; white-space: nowrap; }
-.split .char { display: inline-block; }
-.split:not(.words-in) .char { opacity: 0; }
-.split.words-in .char { animation: char-up .8s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--c) * 26ms); }
-@keyframes char-up { from { opacity: 0; transform: translateY(.55em) rotate(8deg); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
-
-/* Blur Text: palavras saem do desfoque */
-.blur-words .word { display: inline-block; }
-.blur-words:not(.words-in) .word { opacity: 0; }
-.blur-words.words-in .word { animation: blur-in 1s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--w) * 70ms); }
-@keyframes blur-in { from { opacity: 0; filter: blur(14px); transform: translateY(.18em); } to { opacity: 1; filter: none; transform: none; } }
-
-/* Scroll Reveal: palavras acendem com a rolagem */
-.scroll-reveal .word { --a: 0; opacity: calc(.16 + var(--a) * .84); filter: blur(calc((1 - var(--a)) * 2.5px)); transition: opacity .25s linear, filter .25s linear; }
+/* ---------- animação dos textos (script.js) — Text Type ---------- */
+.type-text .word { white-space: nowrap; }
+.type-text .char { visibility: hidden; }
+.type-text .char.on { visibility: visible; }
+.type-caret { display: inline-block; position: relative; width: 0; }
+.type-caret::after {
+  content: ''; position: absolute; left: .04em; bottom: .08em;
+  width: max(2px, .045em); height: .82em;
+  background: var(--borgonha); border-radius: 1px;
+}
+.typing .type-caret::after { animation: none; }
+.type-caret::after { animation: blink 1s steps(1) infinite; }
+.type-caret.done::after { opacity: 0; transition: opacity .6s; animation: none; }
+.method-head .type-caret::after, .contact .type-caret::after { background: var(--manteiga); }
 
 /* Text Type: cursor piscando */
 .typer { color: var(--vinho); }
@@ -832,14 +830,6 @@ html:not(.js) .flip-hint { display: none; }
 @keyframes hw-draw { to { stroke-dashoffset: 0; } }
 @keyframes hw-fill { to { fill-opacity: 1; } }
 .contact-inner > p.contact-sign { font: 400 64px/1 var(--f-sig); max-width: none; color: var(--manteiga); margin-top: 18px; transform: rotate(-3deg); transform-origin: left; }
-
-/* textos de apoio */
-.soft:not(.soft-in) { opacity: 0; }
-.soft-in { animation: soft-up .9s .1s ease both; }
-html:not(.sem-abertura) .hero .soft-in { animation-delay: 3.6s; }
-@keyframes soft-up { from { opacity: 0; translate: 0 12px; } }
-.label.soft-in { animation-name: label-in; }
-@keyframes label-in { from { opacity: 0; letter-spacing: .4em; } }
 
 /* ---------- aparecer ao rolar (só com JS) ---------- */
 .js .reveal { opacity: 0; translate: 0 18px; transition: opacity .9s ease, translate .9s ease, transform .5s, filter .8s; }
