@@ -10,21 +10,21 @@ document.documentElement.classList.add('js');
    ========================================================= */
 var PLAYLIST = 'spotify:playlist:3jPBRkM489i16rdP3VZsXd';
 var TRACKS = [
-  { title: 'Dreams', artist: 'Fleetwood Mac', uri: 'spotify:track:0ofHAoxe9vBkTCp2UQIavz' },
-  { title: 'Take A Chance On Me', artist: 'ABBA', uri: 'spotify:track:5BckPAYcKEJuYs1eV1BHHe' },
-  { title: 'Mockingbird', artist: 'Larkin Poe', uri: 'spotify:track:6ww6Jhl1ciBSMARpaQkDp4' },
-  { title: 'Bloom Again', artist: 'Larkin Poe', uri: 'spotify:track:0gB4RgvX1XOV5LEgRWliGo' },
-  { title: 'Procession', artist: 'Nightwish', uri: 'spotify:track:7aIxfEHjebCNbs6bpKv9Go' },
-  { title: "How's the Heart?", artist: 'Nightwish', uri: 'spotify:track:6lkVbijlh932FSS2I0gDrR' },
-  { title: 'Rivers', artist: 'Epica', uri: 'spotify:track:6SO03S6E3WsdfUsrdz447z' },
-  { title: 'Send Me On My Way', artist: 'Rusted Root', uri: 'spotify:track:6XK6Zw6JkFsHXzAcMWNiIr' },
-  { title: 'Walk Of Life', artist: 'Dire Straits', uri: 'spotify:track:5Hk4Mpex0s2ndUpDQ5v2rU' },
-  { title: 'I Shot The Sheriff', artist: 'Eric Clapton', uri: 'spotify:track:0UOxp1BpnD8uPQMKU4wKjz' },
-  { title: 'Lady Writer', artist: 'Dire Straits', uri: 'spotify:track:2RBcYkonAofm0rYycVrCGt' },
-  { title: 'Sisters of the Moon', artist: 'Fleetwood Mac', uri: 'spotify:track:7Gjj6NxSsVwXfOXUjvjCXv' },
-  { title: 'Tusk (ao vivo)', artist: 'Fleetwood Mac', uri: 'spotify:track:66iVi7pfwvuaZgraZEbgpP' },
-  { title: 'Somewhere Only We Know', artist: 'Keane', uri: 'spotify:track:1SKPmfSYaPsETbRHaiA18G' },
-  { title: "Everybody's Changing", artist: 'Keane', uri: 'spotify:track:0yac0FPhLRH9i9lOng3f81' }
+  { title: 'Dreams', artist: 'Fleetwood Mac', uri: 'spotify:track:0ofHAoxe9vBkTCp2UQIavz', cover: 'https://i.scdn.co/image/ab67616d00001e02e52a59a28efa4773dd2bfe1b' },
+  { title: 'Take A Chance On Me', artist: 'ABBA', uri: 'spotify:track:5BckPAYcKEJuYs1eV1BHHe', cover: 'https://i.scdn.co/image/ab67616d00001e026f705bef76c1d861c4d51d8c' },
+  { title: 'Mockingbird', artist: 'Larkin Poe', uri: 'spotify:track:6ww6Jhl1ciBSMARpaQkDp4', cover: 'https://i.scdn.co/image/ab67616d00001e02d10f20af17289cd723bf5e03' },
+  { title: 'Bloom Again', artist: 'Larkin Poe', uri: 'spotify:track:0gB4RgvX1XOV5LEgRWliGo', cover: 'https://i.scdn.co/image/ab67616d00001e02d10f20af17289cd723bf5e03' },
+  { title: 'Procession', artist: 'Nightwish', uri: 'spotify:track:7aIxfEHjebCNbs6bpKv9Go', cover: 'https://i.scdn.co/image/ab67616d00001e024fadb2c3b4790efd1ed1e369' },
+  { title: "How's the Heart?", artist: 'Nightwish', uri: 'spotify:track:6lkVbijlh932FSS2I0gDrR', cover: 'https://i.scdn.co/image/ab67616d00001e024fadb2c3b4790efd1ed1e369' },
+  { title: 'Rivers', artist: 'Epica', uri: 'spotify:track:6SO03S6E3WsdfUsrdz447z', cover: 'https://i.scdn.co/image/ab67616d00001e029c939252c5024c6584db122b' },
+  { title: 'Send Me On My Way', artist: 'Rusted Root', uri: 'spotify:track:6XK6Zw6JkFsHXzAcMWNiIr', cover: 'https://i.scdn.co/image/ab67616d00001e0279e5734d0c151415e3fa8d6f' },
+  { title: 'Walk Of Life', artist: 'Dire Straits', uri: 'spotify:track:5Hk4Mpex0s2ndUpDQ5v2rU', cover: 'https://i.scdn.co/image/ab67616d00001e027ed2600002d1482f1fa4c1c6' },
+  { title: 'I Shot The Sheriff', artist: 'Eric Clapton', uri: 'spotify:track:0UOxp1BpnD8uPQMKU4wKjz', cover: 'https://i.scdn.co/image/ab67616d00001e02d752956b8a82ffa07baa835e' },
+  { title: 'Lady Writer', artist: 'Dire Straits', uri: 'spotify:track:2RBcYkonAofm0rYycVrCGt', cover: 'https://i.scdn.co/image/ab67616d00001e02b1f7f1d5898b28c1ce3f4947' },
+  { title: 'Sisters of the Moon', artist: 'Fleetwood Mac', uri: 'spotify:track:7Gjj6NxSsVwXfOXUjvjCXv', cover: 'https://i.scdn.co/image/ab67616d00001e02d46213c0dd0b032092ea6db3' },
+  { title: 'Tusk (ao vivo)', artist: 'Fleetwood Mac', uri: 'spotify:track:66iVi7pfwvuaZgraZEbgpP', cover: 'https://i.scdn.co/image/ab6742d3000052b76f0897bc1c4494225123c775' },
+  { title: 'Somewhere Only We Know', artist: 'Keane', uri: 'spotify:track:1SKPmfSYaPsETbRHaiA18G', cover: 'https://i.scdn.co/image/ab67616d00001e027d6cd95a046a3c0dacbc7d33' },
+  { title: "Everybody's Changing", artist: 'Keane', uri: 'spotify:track:0yac0FPhLRH9i9lOng3f81', cover: 'https://i.scdn.co/image/ab67616d00001e027d6cd95a046a3c0dacbc7d33' }
 ];
 
 /* Notas da margem: cada palavra destacada do título acende a nota correspondente. */
@@ -56,7 +56,29 @@ var TRACKS = [
   });
 })();
 
-/* Notas soltas: cada toque vira a página para outra frase. */
+/* Máquina de escrever (estilo "Text Type"): escreve um texto letra por letra. */
+function typeText(el, str, speed, done) {
+  if (el._typing) clearTimeout(el._typing);
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { el.textContent = str; if (done) done(); return; }
+  var i = 0;
+  el.textContent = '';
+  (function step() {
+    el.textContent = str.slice(0, ++i);
+    if (i < str.length) el._typing = setTimeout(step, speed + Math.random() * speed * 0.6);
+    else { el._typing = 0; if (done) done(); }
+  })();
+}
+function eraseText(el, speed, done) {
+  if (el._typing) clearTimeout(el._typing);
+  (function step() {
+    el.textContent = el.textContent.slice(0, -1);
+    if (el.textContent.length) el._typing = setTimeout(step, speed);
+    else { el._typing = 0; if (done) done(); }
+  })();
+}
+
+/* Notas soltas: cada toque datilografa outra frase. */
 (function () {
   var btn = document.getElementById('phrase');
   var text = document.getElementById('phrase-text');
@@ -74,11 +96,8 @@ var TRACKS = [
   var i = 0;
   btn.addEventListener('click', function () {
     i = (i + 1) % phrases.length;
-    text.classList.add('out');
-    setTimeout(function () {
-      text.textContent = phrases[i];
-      text.classList.remove('out');
-    }, 250);
+    btn.classList.add('typing');
+    typeText(text, phrases[i], 38, function () { btn.classList.remove('typing'); });
   });
 })();
 
@@ -110,7 +129,12 @@ var TRACKS = [
     b.style.setProperty('--label', LABELS[i % LABELS.length]);
     b.style.setProperty('--tilt', ((i * 37) % 7 - 3) * 0.6 + 'deg');
     b.setAttribute('aria-pressed', 'false');
-    b.innerHTML = '<span class="disc" aria-hidden="true"></span><span class="cover"><span class="s-n"></span><span class="s-artist"></span><span class="s-title"></span></span>';
+    b.innerHTML = '<span class="disc" aria-hidden="true"><span class="disc-art"></span></span><span class="cover"><img class="cover-img" alt="" loading="lazy"><span class="s-n"></span><span class="s-artist"></span><span class="s-title"></span></span>';
+    if (t.cover) {
+      b.querySelector('.cover-img').src = t.cover;
+      b.querySelector('.disc-art').style.backgroundImage = 'url(' + t.cover + ')';
+      b.classList.add('has-cover');
+    } else { b.querySelector('.cover-img').remove(); }
     b.querySelector('.s-n').textContent = 'lado A · ' + String(i + 1).padStart(2, '0');
     b.querySelector('.s-artist').textContent = t.artist;
     b.querySelector('.s-title').textContent = t.title;
@@ -121,6 +145,12 @@ var TRACKS = [
     sleeves.push(b);
   });
 
+  var vinylLabel = document.getElementById('vinyl-label');
+  function setArt(url) {
+    if (!vinylLabel) return;
+    vinylLabel.style.backgroundImage = url ? 'url(' + url + ')' : '';
+    vinylLabel.classList.toggle('has-art', !!url);
+  }
   function setPlaying(isPlaying) {
     paused = !isPlaying;
     box.classList.toggle('playing', isPlaying);
@@ -133,6 +163,7 @@ var TRACKS = [
     var t = TRACKS[current];
     sleeves.forEach(function (s, k) { s.setAttribute('aria-pressed', k === current ? 'true' : 'false'); });
     box.style.setProperty('--label', LABELS[current % LABELS.length]);
+    setArt(t.cover);
     nowTitle.textContent = t.title;
     nowArtist.textContent = t.artist;
     if (bar) bar.style.width = '0%';
@@ -194,6 +225,7 @@ var TRACKS = [
               sleeves.forEach(function (s, j) { s.setAttribute('aria-pressed', j === k ? 'true' : 'false'); });
               nowTitle.textContent = TRACKS[k].title; nowArtist.textContent = TRACKS[k].artist;
               box.style.setProperty('--label', LABELS[k % LABELS.length]);
+              setArt(TRACKS[k].cover);
             }
           }
         });
@@ -285,38 +317,207 @@ var TRACKS = [
   });
 })();
 
-/* Cursor de abelha: segue o mouse voando e vira a cabeça na direção do movimento.
-   Só em computador (mouse). */
+/* Cursor de borboleta: segue o mouse batendo as asas, vira na direção do movimento
+   e deixa um rastro pontilhado que some, como o voo de um inseto.
+   Só em computador (mouse). O cursor original fica escondido. */
 (function () {
   if (!window.matchMedia || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var HEAD = -128; // direção da cabeça na imagem (graus)
-  var bee = new Image();
-  bee.className = 'bee-cursor';
-  bee.alt = '';
-  bee.setAttribute('aria-hidden', 'true');
-  bee.onload = function () {
-    document.body.appendChild(bee);
+  var HEAD = -90; // a cabeça da borboleta aponta para cima na imagem
+  var fly = new Image();
+  fly.className = 'bee-cursor';
+  fly.alt = '';
+  fly.setAttribute('aria-hidden', 'true');
+  fly.onload = function () {
+    var trail = document.createElement('canvas');
+    trail.className = 'cursor-trail';
+    trail.setAttribute('aria-hidden', 'true');
+    var ctx = trail.getContext('2d');
+    document.body.appendChild(trail);
+    document.body.appendChild(fly);
     document.documentElement.classList.add('has-bee');
-    var mx = -100, my = -100, x = -100, y = -100, ang = 0, raf = 0;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    function size() { trail.width = innerWidth * dpr; trail.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    size(); window.addEventListener('resize', size);
+
+    var mx = -100, my = -100, x = -100, y = -100, ang = 0, raf = 0, hidden = false;
+    var pts = [], LIFE = 1100, GAP = 9;
     function tick(t) {
       var dx = mx - x, dy = my - y;
-      x += dx * 0.22; y += dy * 0.22;
-      if (Math.abs(dx) + Math.abs(dy) > 3) {
+      x += dx * 0.2; y += dy * 0.2;
+      var moving = Math.abs(dx) + Math.abs(dy) > 2;
+      if (moving) {
         var target = Math.atan2(dy, dx) * 180 / Math.PI - HEAD;
-        var diff = ((target - ang + 540) % 360) - 180; // menor caminho
-        ang += diff * 0.12;
+        ang += (((target - ang + 540) % 360) - 180) * 0.1;
       }
-      var hover = Math.sin(t / 140) * 2;
-      bee.style.transform = 'translate(' + (x - 22) + 'px,' + (y - 18 + hover) + 'px) rotate(' + ang + 'deg)';
-      raf = requestAnimationFrame(tick);
+      var flap = 0.62 + 0.38 * Math.abs(Math.sin(t / (moving ? 70 : 160)));
+      var bob = Math.sin(t / 220) * 3;
+      fly.style.transform = 'translate(' + (x - 21) + 'px,' + (y - 16 + bob) + 'px) rotate(' + ang + 'deg) scaleX(' + flap.toFixed(3) + ')';
+
+      // rastro pontilhado
+      var last = pts[pts.length - 1];
+      if (!hidden && (!last || Math.hypot(x - last.x, y - last.y) > GAP)) pts.push({ x: x, y: y + bob, t: t });
+      while (pts.length && t - pts[0].t > LIFE) pts.shift();
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      for (var i = 0; i < pts.length; i++) {
+        var a = 1 - (t - pts[i].t) / LIFE;
+        ctx.globalAlpha = a * 0.75;
+        ctx.fillStyle = i % 2 ? '#C29A51' : '#882C3D';
+        ctx.beginPath(); ctx.arc(pts[i].x, pts[i].y, 1.2 + a * 1.4, 0, 6.2832); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      raf = (pts.length || moving) ? requestAnimationFrame(tick) : 0;
     }
+    function kick() { if (!raf) raf = requestAnimationFrame(tick); }
     document.addEventListener('mousemove', function (e) {
-      mx = e.clientX; my = e.clientY; bee.classList.add('on');
-      bee.classList.toggle('big', !!(e.target.closest && e.target.closest('a, button, [role="tab"]')));
-      if (!raf) raf = requestAnimationFrame(tick);
+      mx = e.clientX; my = e.clientY; hidden = false; fly.classList.add('on');
+      fly.classList.toggle('big', !!(e.target.closest && e.target.closest('a, button, [role="button"], [role="tab"]')));
+      kick();
     });
-    document.documentElement.addEventListener('mouseleave', function () { bee.classList.remove('on'); });
+    // dentro do player do Spotify o navegador mostra o cursor dele: a borboleta se esconde
+    document.addEventListener('mouseover', function (e) { if (e.target.tagName === 'IFRAME') { hidden = true; fly.classList.remove('on'); } });
+    document.documentElement.addEventListener('mouseleave', function () { hidden = true; fly.classList.remove('on'); });
+    // um pequeno pulo ao clicar
+    document.addEventListener('mousedown', function () { fly.classList.add('tap'); setTimeout(function () { fly.classList.remove('tap'); }, 200); });
   };
-  bee.src = 'assets/objetos/abelha.webp';
+  fly.src = 'assets/objetos/borboleta-cursor.webp';
+})();
+
+/* Animação nos textos (efeitos inspirados no React Bits, feitos à mão para este site):
+   - Split Text: títulos grandes entram letra por letra
+   - Blur Text: títulos de seção saem do desfoque, palavra por palavra
+   - Text Type: "lo faz · ..." datilografa as áreas em loop
+   - Scroll Reveal: parágrafos do "sobre" acendem conforme a rolagem
+   - Escrita à mão: assinaturas desenhadas traço a traço */
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+  var START = (!root.classList.contains('sem-abertura') && document.querySelector('.loader')) ? 3400 : 250;
+  function onView(els, cls, margin) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add(cls); io.unobserve(e.target); } });
+    }, { rootMargin: margin || '0px 0px -6% 0px' });
+    Array.prototype.forEach.call(els, function (el) { io.observe(el); });
+  }
+  // divide o texto em palavras (e, se pedido, em letras), sem mexer em botões e links
+  function split(el, chars, counters) {
+    Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+      if (node.nodeType === 3) {
+        var frag = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach(function (p) {
+          if (!p) return;
+          if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+          var w = document.createElement('span'); w.className = 'word'; w.style.setProperty('--w', counters.w++);
+          if (chars) {
+            Array.from(p).forEach(function (ch) {
+              var c = document.createElement('span'); c.className = 'char'; c.style.setProperty('--c', counters.c++); c.textContent = ch;
+              w.appendChild(c);
+            });
+          } else w.textContent = p;
+          frag.appendChild(w);
+        });
+        node.replaceWith(frag);
+      } else if (node.nodeType === 1 && node.tagName !== 'BR') split(node, chars, counters);
+    });
+  }
+
+  if (!reduce) {
+    // Split Text
+    var big = document.querySelectorAll('.hero h1, .me-hero h1');
+    Array.prototype.forEach.call(big, function (h) { split(h, true, { w: 0, c: 0 }); h.classList.add('split'); });
+    setTimeout(function () { Array.prototype.forEach.call(big, function (h) { h.classList.add('words-in'); }); }, START - 200);
+
+    // Blur Text
+    var heads = document.querySelectorAll('main h2, .page h3, .soundtrack-copy h3');
+    Array.prototype.forEach.call(heads, function (h) { split(h, false, { w: 0, c: 0 }); h.classList.add('blur-words'); });
+    onView(heads, 'words-in');
+
+    // Scroll Reveal
+    var reveal = Array.prototype.slice.call(document.querySelectorAll('.about-copy > p:not(.label), .ai-copy > p:not(.label), .me-hero .intro, .me-section-head > p:not(.label)'));
+    reveal.forEach(function (p) { split(p, false, { w: 0, c: 0 }); p.classList.add('scroll-reveal'); p._words = p.querySelectorAll('.word'); });
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var vh = window.innerHeight;
+      reveal.forEach(function (p) {
+        var r = p.getBoundingClientRect();
+        // acende do fim da tela até ~40% da altura; o que já passou fica aceso
+        var prog = r.bottom < 0 ? 1 : Math.min(1, Math.max(0, (vh * 0.92 - r.top) / (vh * 0.5 + r.height * 0.35)));
+        var n = p._words.length, lit = prog * (n + 4);
+        for (var i = 0; i < n; i++) {
+          var a = Math.min(1, Math.max(0, lit - i));
+          if (p._words[i]._a !== a) { p._words[i]._a = a; p._words[i].style.setProperty('--a', a.toFixed(2)); }
+        }
+      });
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+
+    // textos de apoio e etiquetas: leve deslize
+    var soft = document.querySelectorAll('.label, .eyebrow, .hero .intro, .notebook-head > p, .contact-inner > p, .hand-note, .page-tag, .page-note');
+    Array.prototype.forEach.call(soft, function (el) { el.classList.add('soft'); });
+    onView(soft, 'soft-in');
+  }
+
+  // Text Type: "lo faz · design / publicidade / ..."
+  Array.prototype.forEach.call(document.querySelectorAll('.typer'), function (el) {
+    var words = (el.getAttribute('data-words') || el.textContent).split('|');
+    if (reduce || words.length < 2) return;
+    var k = 0;
+    function next() {
+      setTimeout(function () {
+        eraseText(el, 32, function () {
+          k = (k + 1) % words.length;
+          setTimeout(function () { typeText(el, words[k], 75, next); }, 260);
+        });
+      }, 1900);
+    }
+    el.textContent = '';
+    setTimeout(function () { typeText(el, words[0], 75, next); }, START + 500);
+  });
+
+  // Escrita à mão: o texto vira um desenho em SVG, traçado letra por letra
+  var hands = document.querySelectorAll('.handwrite');
+  if (!hands.length || reduce || !document.fonts) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  document.fonts.ready.then(function () {
+    Array.prototype.forEach.call(hands, function (el) {
+      var txt = el.textContent.trim();
+      var cs = getComputedStyle(el);
+      var fs = parseFloat(cs.fontSize);
+      var svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('class', 'hw-svg');
+      svg.setAttribute('role', 'img');
+      svg.setAttribute('aria-label', txt);
+      var t = document.createElementNS(NS, 'text');
+      t.setAttribute('x', '0'); t.setAttribute('y', String(fs));
+      t.setAttribute('stroke-width', Math.max(0.6, fs / 42).toFixed(2));
+      t.style.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+      t.style.setProperty('--dash', Math.round(fs * 9));
+      Array.from(txt).forEach(function (ch, i) {
+        var s = document.createElementNS(NS, 'tspan');
+        s.textContent = ch;
+        s.style.setProperty('--i', i);
+        t.appendChild(s);
+      });
+      svg.appendChild(t);
+      el.textContent = '';
+      el.appendChild(svg);
+      var bb = t.getBBox();
+      var pad = fs * 0.15;
+      svg.setAttribute('viewBox', [bb.x - pad, bb.y - pad, bb.width + pad * 2, bb.height + pad * 2].map(function (v) { return v.toFixed(1); }).join(' '));
+      var w = bb.width + pad * 2, hgt = bb.height + pad * 2;
+      var maxW = Math.max(120, el.parentElement.getBoundingClientRect().width || w);
+      var k = Math.min(1, maxW / w);
+      svg.style.width = (w * k).toFixed(1) + 'px';
+      svg.style.height = (hgt * k).toFixed(1) + 'px';
+    });
+    var hero = Array.prototype.filter.call(hands, function (el) { return el.closest('.hero'); });
+    var rest = Array.prototype.filter.call(hands, function (el) { return !el.closest('.hero'); });
+    setTimeout(function () { hero.forEach(function (el) { el.classList.add('hw-on'); }); }, START + 900);
+    onView(rest, 'hw-on', '0px 0px -10% 0px');
+  });
 })();

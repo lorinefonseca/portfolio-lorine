@@ -19,14 +19,16 @@ Direção visual: editorial anotado (notas à mão na margem) + botânica (janel
 ## Trilha sonora (Spotify)
 No topo do `script.js`, a lista `TRACKS` tem as músicas da estante (título, artista e `spotify:track:ID`).
 O player usa a API oficial do Spotify (IFrame API): o disco gira quando toca e para quando pausa.
+As capas dos álbuns vêm do próprio Spotify (campo `cover`).
 
 ## Personalizar
 - Projetos: cada card em `#projetos` é um link `<a class="work">` para o Behance.
 - Frases dos cadernos: lista `phrases` em `script.js`.
 - WhatsApp: botão flutuante `.whatsapp` no fim do `index.html` e do `sobre-mim.html`.
 - Cards que viram (`flip.js`): qualquer `.flip` com `.flip-front` e `.flip-back` vira ao clicar (mola, inclinação e brilho). Usado nos princípios, nas etapas, nos trabalhos e nos passatempos.
+- Efeitos de texto (`script.js`): letras no título da abertura, títulos saindo do desfoque, máquina de escrever (`.typer`), parágrafos que acendem com a rolagem (`.scroll-reveal`) e escrita à mão em SVG (`.handwrite`).
 - Fichário (método): abas `.tab` e botões `.turn` viram as páginas; cada página dupla é um `.spread`.
-- Cursor de abelha: imagem em `assets/objetos/abelha.webp` (aparece só em computador).
+- Cursor de borboleta com rastro pontilhado: imagem em `assets/objetos/borboleta-cursor.webp` (aparece só em computador).
 - Tela de abertura: `.loader` no início do `index.html` (aparece uma vez por visita).
 
 ## Créditos das imagens
