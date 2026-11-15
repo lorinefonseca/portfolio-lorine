@@ -341,7 +341,7 @@ function eraseText(el, speed, done) {
     size(); window.addEventListener('resize', size);
 
     var mx = -100, my = -100, x = -100, y = -100, ang = 0, raf = 0, hidden = false;
-    var pts = [], LIFE = 1100, GAP = 9;
+    var pts = [], LIFE = 1100, GAP = 8;
     function tick(t) {
       var dx = mx - x, dy = my - y;
       x += dx * 0.2; y += dy * 0.2;
@@ -359,11 +359,17 @@ function eraseText(el, speed, done) {
       if (!hidden && (!last || Math.hypot(x - last.x, y - last.y) > GAP)) pts.push({ x: x, y: y + bob, t: t });
       while (pts.length && t - pts[0].t > LIFE) pts.shift();
       ctx.clearRect(0, 0, innerWidth, innerHeight);
-      for (var i = 0; i < pts.length; i++) {
+      // tracinhos finos e pretos, na direção do voo
+      ctx.strokeStyle = '#1c1310';
+      ctx.lineWidth = 0.9;
+      ctx.lineCap = 'round';
+      for (var i = 1; i < pts.length; i++) {
         var a = 1 - (t - pts[i].t) / LIFE;
-        ctx.globalAlpha = a * 0.75;
-        ctx.fillStyle = i % 2 ? '#C29A51' : '#882C3D';
-        ctx.beginPath(); ctx.arc(pts[i].x, pts[i].y, 1.2 + a * 1.4, 0, 6.2832); ctx.fill();
+        var px = pts[i - 1].x, py = pts[i - 1].y, qx = pts[i].x, qy = pts[i].y;
+        var len = Math.hypot(qx - px, qy - py) || 1;
+        var ux = (qx - px) / len, uy = (qy - py) / len, d = 2.2; // traço de ~4,4px
+        ctx.globalAlpha = a * 0.7;
+        ctx.beginPath(); ctx.moveTo(qx - ux * d, qy - uy * d); ctx.lineTo(qx + ux * d, qy + uy * d); ctx.stroke();
       }
       ctx.globalAlpha = 1;
       raf = (pts.length || moving) ? requestAnimationFrame(tick) : 0;
