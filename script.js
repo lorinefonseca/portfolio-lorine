@@ -9,7 +9,7 @@ document.documentElement.classList.add('js');
    - spotify: link da faixa no Spotify (Compartilhar > Copiar link da música)
    Se quiser mostrar a playlist inteira também, cole o link em PLAYLIST.
    ========================================================= */
-var PLAYLIST = '';
+var PLAYLIST = 'https://open.spotify.com/playlist/3jPBRkM489i16rdP3VZsXd';
 var TRACKS = [
   // { title: 'Nome da música', artist: 'Artista', spotify: 'https://open.spotify.com/track/...' },
 ];
@@ -94,6 +94,22 @@ var TRACKS = [
     player.appendChild(f);
   }
 
+  // Quando a pessoa clica dentro do player do Spotify, o disco começa a girar.
+  window.addEventListener('blur', function () {
+    setTimeout(function () {
+      var f = player.querySelector('iframe');
+      if (f && document.activeElement === f) {
+        box.classList.add('playing');
+        if (label) label.textContent = 'tocando agora';
+      }
+    }, 0);
+  });
+
+  if (!TRACKS.length && PLAYLIST) {
+    list.hidden = true;
+    load(PLAYLIST, true);
+    return;
+  }
   if (!TRACKS.length) {
     // ainda sem faixas: mostra o lado A "em gravação"
     ['lado A em gravação', 'as faixas chegam em breve', 'enquanto isso, a agulha espera'].forEach(function (t) {
