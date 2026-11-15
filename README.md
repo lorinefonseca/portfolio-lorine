@@ -26,7 +26,6 @@ No `index.html`, procure `data-playlist=""` e cole o link da playlist, por exemp
 
 ## Créditos das imagens
 Todas as ilustrações botânicas são de domínio público, via Wikimedia Commons:
-- Orquídea: *Cattleya mossiae*, Edwards's Botanical Register, vol. 26, pl. 58 (1840).
 - Heléboro: *Helleborus niger* (1797).
 - Romã: *Punica granatum*, Köhler's Medizinal-Pflanzen, pl. 110 (1887).
 - Lírio: *Lilium martagon*, P.-J. Redouté, Les Liliacées, vol. 3, t. 146.
