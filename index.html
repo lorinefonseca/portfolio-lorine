@@ -348,20 +348,41 @@
         </button>
       </div>
 
-      <!-- Trilha sonora: vitrola com faixas escolhíveis -->
+      <!-- Trilha sonora: vitrola com estante de discos (Spotify) -->
       <div class="soundtrack" id="trilha">
-        <div class="player-art">
-          <div class="vinyl" id="vinyl" aria-hidden="true"><span></span></div>
-          <img class="gramophone" src="assets/objetos/gramofone.webp" alt="Gramofone antigo com corneta vinho e dourada" width="560" height="786" loading="lazy">
+        <div class="soundtrack-top">
+          <div class="player-art">
+            <button type="button" class="turntable" id="turntable" aria-label="Tocar ou pausar a música">
+              <img class="vinyl-img" src="assets/objetos/vinil.webp" alt="" width="700" height="708" loading="lazy">
+              <span class="vinyl-label" id="vinyl-label" aria-hidden="true"></span>
+            </button>
+            <img class="gramophone" src="assets/objetos/gramofone.webp" alt="Gramofone antigo com corneta vinho e dourada" width="560" height="786" loading="lazy">
+          </div>
+          <div class="soundtrack-copy">
+            <p class="label"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span> <span id="now-label">a trilha sonora da minha vida</span></p>
+            <h3>Trilha sonora de uma vida em construção</h3>
+            <p>A música me moldou como pessoa. Ela está no meu processo criativo e no meu processo de cura: eu não vivo sem, e escuto enquanto trabalho. Gosto de música antiga e de artistas fora dos top hits, que emocionam pela letra e pela composição.</p>
+            <p class="hand-note">na infância eu achava que não gostava de música. na adolescência, me descobri inteira ao lado dela.</p>
+            <div class="deck" aria-label="Controles da vitrola">
+              <div class="now">
+                <span class="now-title" id="now-title">escolha um disco</span>
+                <span class="now-artist" id="now-artist">15 faixas · Spotify</span>
+              </div>
+              <div class="deck-buttons">
+                <button type="button" class="deck-btn" id="prev" aria-label="Faixa anterior">⏮</button>
+                <button type="button" class="deck-btn deck-play" id="play" aria-label="Tocar"><span class="i-play" aria-hidden="true"></span></button>
+                <button type="button" class="deck-btn" id="next" aria-label="Próxima faixa">⏭</button>
+              </div>
+              <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+            </div>
+          </div>
         </div>
-        <div class="soundtrack-copy">
-          <p class="label"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span> <span id="now-label">trilha sonora</span></p>
-          <h3>Trilha sonora de uma vida em construção</h3>
-          <p>A música me moldou como pessoa. Ela está no meu processo criativo e no meu processo de cura: eu não vivo sem, e escuto enquanto trabalho. Gosto de música antiga e de artistas fora dos top hits, que emocionam pela letra e pela composição.</p>
-          <p class="hand-note">na infância eu achava que não gostava de música. na adolescência, me descobri inteira ao lado dela.</p>
-          <ol class="tracks" id="tracks" aria-label="Faixas da trilha sonora"></ol>
-          <div class="spotify" id="spotify"></div>
+        <div class="shelf-wrap">
+          <p class="shelf-label">estante · toque num disco para ouvir</p>
+          <ol class="shelf" id="shelf" aria-label="Discos da trilha sonora"></ol>
         </div>
+        <div class="spotify" id="spotify"><div id="spotify-embed"></div></div>
+        <p class="spotify-note">Sem login no Spotify, cada faixa toca uma prévia de 30 segundos.</p>
       </div>
     </section>
 
