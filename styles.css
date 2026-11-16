@@ -32,6 +32,9 @@
   --vivo: saturate(.95) sepia(0) brightness(1) contrast(1);
 }
 
+/* sempre tema claro, mesmo com o celular/sistema no modo escuro */
+:root { color-scheme: only light; }
+html, body { background-color: var(--papel); color: var(--tinta); forced-color-adjust: none; }
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
