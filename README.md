@@ -26,6 +26,7 @@ As capas dos álbuns vêm do próprio Spotify (campo `cover`).
 - Projetos: cada card em `#projetos` é um link `<a class="work">` para o Behance.
 - Frases dos cadernos: lista `phrases` em `script.js`.
 - WhatsApp: botão flutuante `.whatsapp` no fim do `index.html` e do `sobre-mim.html`.
+- Sons (`sound.js`): sintetizados no navegador (sem arquivos). Card virando, página do fichário, marcadores no hover e pólen no clique. Botão de ligar/desligar no canto inferior esquerdo.
 - Cards que viram (`flip.js`): qualquer `.flip` com `.flip-front` e `.flip-back` vira ao clicar (mola, inclinação e brilho). Usado nos princípios, nas etapas, nos trabalhos e nos passatempos.
 - Efeitos de texto (`script.js`): títulos se datilografam letra por letra (Text Type), "lo faz · ..." em loop (`.typer`) e assinaturas desenhadas à mão (`.handwrite`).
 - Fichário (método): abas `.tab` e botões `.turn` viram as páginas; cada página dupla é um `.spread`.

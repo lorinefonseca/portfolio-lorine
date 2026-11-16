@@ -848,6 +848,21 @@ html:not(.js) .flip-hint { display: none; }
 @keyframes hw-fill { to { fill-opacity: 1; } }
 .contact-inner > p.contact-sign { font: 400 64px/1 var(--f-sig); max-width: none; color: var(--manteiga); margin-top: 18px; transform: rotate(-3deg); transform-origin: left; }
 
+/* ---------- botão de som ---------- */
+.sound-toggle {
+  position: fixed; z-index: 45;
+  left: max(18px, env(safe-area-inset-left, 0px)); bottom: max(18px, env(safe-area-inset-bottom, 0px));
+  display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px;
+  border: 1px solid #2a1e1a33; border-radius: 999px; background: #f3ebddd9; color: var(--tinta);
+  font: 500 11px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase;
+  backdrop-filter: blur(6px); box-shadow: 0 8px 18px -10px #2a1e1a66; cursor: pointer;
+  animation: wa-in .8s 3.8s cubic-bezier(.2, .7, .2, 1) both;
+}
+.sem-abertura .sound-toggle { animation-delay: .4s; }
+.sound-toggle span:first-child { font-size: 16px; color: var(--borgonha); }
+.sound-toggle[aria-pressed="false"] { opacity: .7; }
+@media (max-width: 650px) { .sound-toggle .st-label { display: none; } .sound-toggle { width: 40px; padding: 0; justify-content: center; } }
+
 /* ---------- aparecer ao rolar (só com JS) ---------- */
 .js .reveal { opacity: 0; translate: 0 18px; transition: opacity .9s ease, translate .9s ease, transform .5s, filter .8s; }
 .js .reveal.in { opacity: 1; translate: 0 0; }

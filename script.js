@@ -272,6 +272,7 @@ function eraseText(el, speed, done) {
     var from = spreads[current], to = spreads[i];
     var dir = i > current ? 'next' : 'prev';
     setTabs(i);
+    if (window.loSound) loSound.play('page');
     if (focusTab) tabs[i].focus();
     current = i;
     if (reduce) { from.classList.remove('is-active'); to.classList.add('is-active'); return; }
@@ -336,7 +337,8 @@ function eraseText(el, speed, done) {
   if (!window.matchMedia || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var HEAD = -90; // a cabeça da borboleta aponta para cima na imagem
-  var LAND_ON = 'a, button, [role="tab"], .nav-contact';
+  var LAND_ON = 'a, button, [role="tab"], [role="button"], .nav-contact, .sleeve';
+  var spot = null; // lugar sorteado na borda do botão/card
   var fly = new Image();
   fly.className = 'bee-cursor';
   fly.alt = '';
@@ -360,10 +362,11 @@ function eraseText(el, speed, done) {
 
     function tick(t) {
       var tx = mx, ty = my, landed = false;
-      if (perch && document.contains(perch)) {
+      if (perch && document.contains(perch) && spot) {
         var r = perch.getBoundingClientRect();
-        tx = r.left + Math.min(r.width - 14, Math.max(14, r.width * 0.78));
-        ty = r.top - 8; // em cima da borda superior
+        if (spot.edge === 'top') { tx = r.left + r.width * spot.f; ty = r.top - 8; }
+        else if (spot.edge === 'left') { tx = r.left - 6; ty = r.top + r.height * spot.f; }
+        else { tx = r.right + 6; ty = r.top + r.height * spot.f; }
         landed = true;
       }
       var dx = tx - x, dy = ty - y;
@@ -372,7 +375,7 @@ function eraseText(el, speed, done) {
       var dist = Math.abs(dx) + Math.abs(dy);
       var moving = dist > 2;
       var targetAng = ang;
-      if (landed && dist < 18) targetAng = 0; // pousada: cabeça para cima
+      if (landed && dist < 18) targetAng = spot.tilt; // pousada, com a inclinação sorteada
       else if (moving) targetAng = Math.atan2(dy, dx) * 180 / Math.PI - HEAD;
       ang += (((targetAng - ang + 540) % 360) - 180) * (landed ? 0.18 : 0.1);
       // pousada: asas abrem e fecham devagar; voando: batem rápido
@@ -414,6 +417,16 @@ function eraseText(el, speed, done) {
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX; my = e.clientY; hidden = false; fly.classList.add('on');
       var b = e.target.closest ? e.target.closest(LAND_ON) : null;
+      if (b !== perch) {
+        // cada pouso num lugar diferente: borda de cima (mais comum) ou laterais, com inclinação aleatória
+        var roll = Math.random();
+        var edge = roll < 0.6 ? 'top' : roll < 0.8 ? 'left' : 'right';
+        spot = {
+          edge: edge,
+          f: edge === 'top' ? 0.1 + Math.random() * 0.8 : 0.2 + Math.random() * 0.6,
+          tilt: edge === 'top' ? (Math.random() - 0.5) * 50 : edge === 'left' ? -70 + (Math.random() - 0.5) * 30 : 70 + (Math.random() - 0.5) * 30
+        };
+      }
       perch = b;
       fly.classList.toggle('landed', !!b);
       kick();
@@ -422,6 +435,7 @@ function eraseText(el, speed, done) {
     document.documentElement.addEventListener('mouseleave', function () { hidden = true; perch = null; fly.classList.remove('on'); });
     // ao clicar: um pouquinho de pólen brilhante
     document.addEventListener('mousedown', function () {
+      if (window.loSound) loSound.play('sparkle');
       var now = performance.now();
       var cx = x, cy = y;
       for (var i = 0; i < 12; i++) {
@@ -600,4 +614,11 @@ function eraseText(el, speed, done) {
   }
   window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   update();
+})();
+
+/* Som de fitinha ao passar o mouse nos marcadores (o "conheça a Lo" e as abas do fichário). */
+(function () {
+  Array.prototype.forEach.call(document.querySelectorAll('.bookmark, .tab'), function (el) {
+    el.addEventListener('mouseenter', function () { if (window.loSound) loSound.play('ribbon'); });
+  });
 })();
