@@ -31,7 +31,7 @@ As capas dos álbuns vêm do próprio Spotify (campo `cover`).
 - Efeitos de texto (`script.js`): títulos se datilografam letra por letra (Text Type), "lo faz · ..." em loop (`.typer`) e assinaturas desenhadas à mão (`.handwrite`).
 - Fichário (método): abas `.tab` e botões `.turn` viram as páginas; cada página dupla é um `.spread`.
 - Cursor de borboleta com rastro pontilhado: imagem em `assets/objetos/borboleta-cursor.webp` (aparece só em computador).
-- Tela de abertura: `.loader` no início do `index.html` (aparece uma vez por visita).
+- Introdução (`intro.js`): fechadura com vídeo, luz e transição para o site. Para trocar os vídeos, edite `INTRO_VIDEOS` no topo de `intro.js` (arquivos em `assets/intro/`). Aparece uma vez por visita; "rever a introdução" no rodapé mostra de novo.
 
 ## Créditos das imagens
 Todas as ilustrações botânicas são de domínio público, via Wikimedia Commons:

@@ -456,7 +456,11 @@ function eraseText(el, speed, done) {
   if (!('IntersectionObserver' in window)) return;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var root = document.documentElement;
-  var START = (!root.classList.contains('sem-abertura') && document.querySelector('.loader')) ? 3400 : 250;
+  // espera a pessoa "entrar" pela fechadura (intro.js) antes de animar a abertura
+  function afterIntro(fn, delay) {
+    if (window.loIntroDone || !document.getElementById('intro')) { setTimeout(fn, 250 + delay); return; }
+    document.addEventListener('lo:entrou', function () { setTimeout(fn, delay); }, { once: true });
+  }
   function onView(els, cls, margin) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add(cls); io.unobserve(e.target); } });
@@ -506,7 +510,7 @@ function eraseText(el, speed, done) {
         });
       })(heroH);
       heroH.classList.add('rise-words');
-      setTimeout(function () { heroH.classList.add('rise-in'); }, START - 150);
+      afterIntro(function () { heroH.classList.add('rise-in'); }, 0);
     }
     var heads = Array.prototype.slice.call(document.querySelectorAll('.me-hero h1, main h2, .soundtrack-copy h3'));
     heads.forEach(function (h) { split(h); h.classList.add('type-text'); });
@@ -535,8 +539,7 @@ function eraseText(el, speed, done) {
         if (!e.isIntersecting) return;
         io.unobserve(e.target);
         var big = e.target.matches('.hero h1, .me-hero h1');
-        var delay = e.target.matches('.hero h1') ? START - 100 : 120;
-        setTimeout(function () { typeHead(e.target, big ? 42 : 34); }, delay);
+        setTimeout(function () { typeHead(e.target, big ? 42 : 34); }, 120);
       });
     }, { rootMargin: '0px 0px -8% 0px' });
     heads.forEach(function (h) { io.observe(h); });
@@ -556,7 +559,7 @@ function eraseText(el, speed, done) {
       }, 1900);
     }
     el.textContent = '';
-    setTimeout(function () { typeText(el, words[0], 75, next); }, START + 500);
+    afterIntro(function () { typeText(el, words[0], 75, next); }, 600);
   });
 
   // Escrita à mão: o texto vira um desenho em SVG, traçado letra por letra
@@ -597,7 +600,7 @@ function eraseText(el, speed, done) {
     });
     var hero = Array.prototype.filter.call(hands, function (el) { return el.closest('.hero'); });
     var rest = Array.prototype.filter.call(hands, function (el) { return !el.closest('.hero'); });
-    setTimeout(function () { hero.forEach(function (el) { el.classList.add('hw-on'); }); }, START + 900);
+    afterIntro(function () { hero.forEach(function (el) { el.classList.add('hw-on'); }); }, 900);
     onView(rest, 'hw-on', '0px 0px -10% 0px');
   });
 })();
