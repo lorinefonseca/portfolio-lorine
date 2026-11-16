@@ -272,6 +272,7 @@ function eraseText(el, speed, done) {
     var from = spreads[current], to = spreads[i];
     var dir = i > current ? 'next' : 'prev';
     setTabs(i);
+    if (window.loSound) loSound.play('page');
     if (focusTab) tabs[i].focus();
     current = i;
     if (reduce) { from.classList.remove('is-active'); to.classList.add('is-active'); return; }
@@ -299,6 +300,18 @@ function eraseText(el, speed, done) {
   Array.prototype.forEach.call(binder.querySelectorAll('.turn'), function (b) {
     b.addEventListener('click', function () { go(parseInt(b.getAttribute('data-go'), 10) - 1); });
   });
+  // no celular: deslizar o dedo para os lados vira a página
+  var sx = 0, sy = 0, tracking = false;
+  var area = binder.querySelector('.spreads');
+  area.addEventListener('touchstart', function (e) {
+    if (e.touches.length !== 1) return;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY; tracking = true;
+  }, { passive: true });
+  area.addEventListener('touchend', function (e) {
+    if (!tracking) return; tracking = false;
+    var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) go(current + (dx < 0 ? 1 : -1));
+  }, { passive: true });
   setTabs(0);
 })();
 
@@ -317,74 +330,121 @@ function eraseText(el, speed, done) {
   });
 })();
 
-/* Cursor de borboleta: segue o mouse batendo as asas, vira na direção do movimento
-   e deixa um rastro pontilhado que some, como o voo de um inseto.
-   Só em computador (mouse). O cursor original fica escondido. */
+/* Cursor de borboleta: segue o mouse batendo as asas e vira na direção do voo.
+   Deixa um rastro de pontinhos bem sutis. Sobre um botão, pousa na borda dele;
+   ao clicar, solta um pólen brilhante. Só em computador (mouse). */
 (function () {
   if (!window.matchMedia || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var HEAD = -90; // a cabeça da borboleta aponta para cima na imagem
+  var LAND_ON = 'a, button, [role="tab"], [role="button"], .nav-contact, .sleeve';
+  var spot = null; // lugar sorteado na borda do botão/card
   var fly = new Image();
   fly.className = 'bee-cursor';
   fly.alt = '';
   fly.setAttribute('aria-hidden', 'true');
   fly.onload = function () {
-    var trail = document.createElement('canvas');
-    trail.className = 'cursor-trail';
-    trail.setAttribute('aria-hidden', 'true');
-    var ctx = trail.getContext('2d');
-    document.body.appendChild(trail);
+    var cv = document.createElement('canvas');
+    cv.className = 'cursor-trail';
+    cv.setAttribute('aria-hidden', 'true');
+    var ctx = cv.getContext('2d');
+    document.body.appendChild(cv);
     document.body.appendChild(fly);
     document.documentElement.classList.add('has-bee');
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    function size() { trail.width = innerWidth * dpr; trail.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+    function size() { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
     size(); window.addEventListener('resize', size);
 
     var mx = -100, my = -100, x = -100, y = -100, ang = 0, raf = 0, hidden = false;
-    var pts = [], LIFE = 1100, GAP = 8;
-    function tick(t) {
-      var dx = mx - x, dy = my - y;
-      x += dx * 0.2; y += dy * 0.2;
-      var moving = Math.abs(dx) + Math.abs(dy) > 2;
-      if (moving) {
-        var target = Math.atan2(dy, dx) * 180 / Math.PI - HEAD;
-        ang += (((target - ang + 540) % 360) - 180) * 0.1;
-      }
-      var flap = 0.62 + 0.38 * Math.abs(Math.sin(t / (moving ? 70 : 160)));
-      var bob = Math.sin(t / 220) * 3;
-      fly.style.transform = 'translate(' + (x - 21) + 'px,' + (y - 16 + bob) + 'px) rotate(' + ang + 'deg) scaleX(' + flap.toFixed(3) + ')';
+    var perch = null;            // botão onde a borboleta pousou
+    var pts = [], LIFE = 900, GAP = 7;
+    var pollen = [];
 
-      // rastro pontilhado
+    function tick(t) {
+      var tx = mx, ty = my, landed = false;
+      if (perch && document.contains(perch) && spot) {
+        var r = perch.getBoundingClientRect();
+        if (spot.edge === 'top') { tx = r.left + r.width * spot.f; ty = r.top - 8; }
+        else if (spot.edge === 'left') { tx = r.left - 6; ty = r.top + r.height * spot.f; }
+        else { tx = r.right + 6; ty = r.top + r.height * spot.f; }
+        landed = true;
+      }
+      var dx = tx - x, dy = ty - y;
+      var ease = landed ? 0.16 : 0.2;
+      x += dx * ease; y += dy * ease;
+      var dist = Math.abs(dx) + Math.abs(dy);
+      var moving = dist > 2;
+      var targetAng = ang;
+      if (landed && dist < 18) targetAng = spot.tilt; // pousada, com a inclinação sorteada
+      else if (moving) targetAng = Math.atan2(dy, dx) * 180 / Math.PI - HEAD;
+      ang += (((targetAng - ang + 540) % 360) - 180) * (landed ? 0.18 : 0.1);
+      // pousada: asas abrem e fecham devagar; voando: batem rápido
+      var flap = landed && dist < 18
+        ? 0.55 + 0.45 * Math.abs(Math.sin(t / 420))
+        : 0.62 + 0.38 * Math.abs(Math.sin(t / (moving ? 70 : 160)));
+      var bob = landed ? 0 : Math.sin(t / 220) * 3;
+      fly.style.transform = 'translate(' + (x - 21) + 'px,' + (y - 15 + bob) + 'px) rotate(' + ang.toFixed(1) + 'deg) scaleX(' + flap.toFixed(3) + ')';
+
+      // rastro: pontinhos bem pequenos e sutis
       var last = pts[pts.length - 1];
-      if (!hidden && (!last || Math.hypot(x - last.x, y - last.y) > GAP)) pts.push({ x: x, y: y + bob, t: t });
+      if (!hidden && moving && (!last || Math.hypot(x - last.x, y - last.y) > GAP)) pts.push({ x: x, y: y + bob, t: t });
       while (pts.length && t - pts[0].t > LIFE) pts.shift();
       ctx.clearRect(0, 0, innerWidth, innerHeight);
-      // tracinhos finos e pretos, na direção do voo
-      ctx.strokeStyle = '#1c1310';
-      ctx.lineWidth = 0.9;
-      ctx.lineCap = 'round';
-      for (var i = 1; i < pts.length; i++) {
+      ctx.fillStyle = '#1c1310';
+      for (var i = 0; i < pts.length; i++) {
         var a = 1 - (t - pts[i].t) / LIFE;
-        var px = pts[i - 1].x, py = pts[i - 1].y, qx = pts[i].x, qy = pts[i].y;
-        var len = Math.hypot(qx - px, qy - py) || 1;
-        var ux = (qx - px) / len, uy = (qy - py) / len, d = 2.2; // traço de ~4,4px
-        ctx.globalAlpha = a * 0.7;
-        ctx.beginPath(); ctx.moveTo(qx - ux * d, qy - uy * d); ctx.lineTo(qx + ux * d, qy + uy * d); ctx.stroke();
+        ctx.globalAlpha = a * 0.28;
+        ctx.beginPath(); ctx.arc(pts[i].x, pts[i].y, 0.85, 0, 6.2832); ctx.fill();
+      }
+      // pólen brilhante
+      for (var k = pollen.length - 1; k >= 0; k--) {
+        var p = pollen[k], age = (t - p.t0) / p.life;
+        if (age >= 1) { pollen.splice(k, 1); continue; }
+        p.vx *= 0.97; p.vy = p.vy * 0.97 + 0.025;
+        p.x += p.vx; p.y += p.vy;
+        var al = (1 - age) * (age < 0.15 ? age / 0.15 : 1);
+        ctx.globalAlpha = al * 0.85;
+        ctx.shadowColor = '#f6e2a8'; ctx.shadowBlur = 6;
+        ctx.fillStyle = p.c;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * (1 - age * 0.4), 0, 6.2832); ctx.fill();
+        ctx.shadowBlur = 0;
       }
       ctx.globalAlpha = 1;
-      raf = (pts.length || moving) ? requestAnimationFrame(tick) : 0;
+      raf = (pts.length || pollen.length || moving || landed) ? requestAnimationFrame(tick) : 0;
     }
     function kick() { if (!raf) raf = requestAnimationFrame(tick); }
+
     document.addEventListener('mousemove', function (e) {
       mx = e.clientX; my = e.clientY; hidden = false; fly.classList.add('on');
-      fly.classList.toggle('big', !!(e.target.closest && e.target.closest('a, button, [role="button"], [role="tab"]')));
+      var b = e.target.closest ? e.target.closest(LAND_ON) : null;
+      if (b !== perch) {
+        // cada pouso num lugar diferente: borda de cima (mais comum) ou laterais, com inclinação aleatória
+        var roll = Math.random();
+        var edge = roll < 0.6 ? 'top' : roll < 0.8 ? 'left' : 'right';
+        spot = {
+          edge: edge,
+          f: edge === 'top' ? 0.1 + Math.random() * 0.8 : 0.2 + Math.random() * 0.6,
+          tilt: edge === 'top' ? (Math.random() - 0.5) * 50 : edge === 'left' ? -70 + (Math.random() - 0.5) * 30 : 70 + (Math.random() - 0.5) * 30
+        };
+      }
+      perch = b;
+      fly.classList.toggle('landed', !!b);
       kick();
     });
-    // dentro do player do Spotify o navegador mostra o cursor dele: a borboleta se esconde
-    document.addEventListener('mouseover', function (e) { if (e.target.tagName === 'IFRAME') { hidden = true; fly.classList.remove('on'); } });
-    document.documentElement.addEventListener('mouseleave', function () { hidden = true; fly.classList.remove('on'); });
-    // um pequeno pulo ao clicar
-    document.addEventListener('mousedown', function () { fly.classList.add('tap'); setTimeout(function () { fly.classList.remove('tap'); }, 200); });
+    document.addEventListener('mouseover', function (e) { if (e.target.tagName === 'IFRAME') { hidden = true; perch = null; fly.classList.remove('on'); } });
+    document.documentElement.addEventListener('mouseleave', function () { hidden = true; perch = null; fly.classList.remove('on'); });
+    // ao clicar: um pouquinho de pólen brilhante
+    document.addEventListener('mousedown', function () {
+      if (window.loSound) loSound.play('sparkle');
+      var now = performance.now();
+      var cx = x, cy = y;
+      for (var i = 0; i < 12; i++) {
+        var aa = Math.random() * Math.PI * 2, sp = 0.4 + Math.random() * 1.3;
+        pollen.push({ x: cx, y: cy, vx: Math.cos(aa) * sp, vy: Math.sin(aa) * sp - 0.6, r: 0.8 + Math.random() * 1.1,
+          c: Math.random() < 0.6 ? '#f3d98f' : '#fff7e0', t0: now, life: 650 + Math.random() * 450 });
+      }
+      kick();
+    });
   };
   fly.src = 'assets/objetos/borboleta-cursor.webp';
 })();
@@ -448,7 +508,7 @@ function eraseText(el, speed, done) {
       heroH.classList.add('rise-words');
       setTimeout(function () { heroH.classList.add('rise-in'); }, START - 150);
     }
-    var heads = Array.prototype.slice.call(document.querySelectorAll('.me-hero h1, main h2, .page h3, .soundtrack-copy h3'));
+    var heads = Array.prototype.slice.call(document.querySelectorAll('.me-hero h1, main h2, .soundtrack-copy h3'));
     heads.forEach(function (h) { split(h); h.classList.add('type-text'); });
     function typeHead(h, speed) {
       var chars = h.querySelectorAll('.char');
@@ -539,5 +599,26 @@ function eraseText(el, speed, done) {
     var rest = Array.prototype.filter.call(hands, function (el) { return !el.closest('.hero'); });
     setTimeout(function () { hero.forEach(function (el) { el.classList.add('hw-on'); }); }, START + 900);
     onView(rest, 'hw-on', '0px 0px -10% 0px');
+  });
+})();
+
+/* Celular: o marcador "conheça a Lo" se recolhe (só a pontinha aparece) depois do topo da página. */
+(function () {
+  var bm = document.querySelector('.bookmark');
+  if (!bm || !window.matchMedia) return;
+  var mq = matchMedia('(max-width: 650px)');
+  var ticking = false;
+  function update() {
+    ticking = false;
+    bm.classList.toggle('peek', mq.matches && window.scrollY > 300);
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+})();
+
+/* Som de fitinha ao passar o mouse nos marcadores (o "conheça a Lo" e as abas do fichário). */
+(function () {
+  Array.prototype.forEach.call(document.querySelectorAll('.bookmark, .tab'), function (el) {
+    el.addEventListener('mouseenter', function () { if (window.loSound) loSound.play('ribbon'); });
   });
 })();

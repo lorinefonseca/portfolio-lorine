@@ -46,6 +46,7 @@
       el.classList.toggle('is-flipped', flipped);
       if (back) back.setAttribute('aria-hidden', flipped ? 'false' : 'true');
       setLinks(flipped);
+      if (window.loSound) loSound.play('flip');
       if (reduce) { angle = target; render(); return; }
       kick();
     }
