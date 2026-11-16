@@ -16,8 +16,10 @@
     if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return; }
     ctx = new AC();
     master = ctx.createGain();
-    master.gain.value = 0.45;
-    master.connect(ctx.destination);
+    master.gain.value = 0.16;
+    var soft = ctx.createBiquadFilter();   // arredonda os agudos
+    soft.type = 'lowpass'; soft.frequency.value = 3200; soft.Q.value = 0.5;
+    master.connect(soft); soft.connect(ctx.destination);
     var len = ctx.sampleRate;
     noise = ctx.createBuffer(1, len, ctx.sampleRate);
     var d = noise.getChannelData(0);
@@ -38,37 +40,34 @@
     src.playbackRate.value = 0.8 + Math.random() * 0.4;
     var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = q || 0.9;
     bp.frequency.setValueAtTime(f0, t); bp.frequency.exponentialRampToValueAtTime(f1, t + dur);
-    var g = ctx.createGain(); env(g, t, 0.012, peak, dur);
+    var g = ctx.createGain(); env(g, t, 0.03, peak, dur);
     src.connect(bp); bp.connect(g); g.connect(master);
     src.start(t, Math.random() * 0.5); src.stop(t + dur + 0.05);
   }
   function tone(t, freq, dur, peak, type) {
     var o = ctx.createOscillator(); o.type = type || 'sine';
     o.frequency.setValueAtTime(freq, t);
-    var g = ctx.createGain(); env(g, t, 0.006, peak, dur);
+    var g = ctx.createGain(); env(g, t, 0.02, peak, dur);
     o.connect(g); g.connect(master);
     o.start(t); o.stop(t + dur + 0.05);
   }
 
   var SOUNDS = {
-    flip: function (t) {           // card virando: papel rápido + toque leve
-      rustle(t, 2600, 700, 0.2, 0.5, 0.8);
-      tone(t + 0.16, 150, 0.09, 0.12);
+    flip: function (t) {           // card virando: sopro de papel bem leve
+      rustle(t, 1800, 600, 0.24, 0.22, 0.7);
     },
-    page: function (t) {           // página do fichário: folha mais longa
-      rustle(t, 1400, 3200, 0.16, 0.22, 0.7);
-      rustle(t + 0.14, 2600, 520, 0.42, 0.42, 0.8);
-      tone(t + 0.5, 110, 0.12, 0.1);
+    page: function (t) {           // página do fichário: folha virando, macia
+      rustle(t, 1100, 2200, 0.18, 0.1, 0.6);
+      rustle(t + 0.15, 1900, 480, 0.45, 0.2, 0.7);
     },
-    ribbon: function (t) {         // marcador: fitinha + plim bem suave
-      rustle(t, 4200, 2600, 0.12, 0.1, 1.4);
-      tone(t + 0.02, 1318.5, 0.32, 0.035, 'triangle');
+    ribbon: function (t) {         // marcador: um "plim" quase sussurrado
+      tone(t, 1046.5, 0.45, 0.025, 'sine');
     },
     sparkle: function (t) {        // pólen: brilhinhos agudos
-      var notes = [2093, 2349.3, 2637, 3136, 3520, 4186];
-      for (var i = 0; i < 5; i++) {
+      var notes = [1568, 1760, 2093, 2349.3, 2637];
+      for (var i = 0; i < 3; i++) {
         var f = notes[Math.floor(Math.random() * notes.length)] * (1 + (Math.random() - 0.5) * 0.01);
-        tone(t + i * 0.035 + Math.random() * 0.02, f, 0.28 + Math.random() * 0.2, 0.035, 'sine');
+        tone(t + i * 0.05 + Math.random() * 0.02, f, 0.4 + Math.random() * 0.2, 0.018, 'sine');
       }
     }
   };
